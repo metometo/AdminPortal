@@ -24,7 +24,7 @@
 	
 	<!-- create bean instance for the authentication manager -->
 	<beans:bean id="usersAuthentication"
-			class="com.аuthentication.UsersAuthentication">
+			class="com.аuthentication.UsersAuthentication" >
 	</beans:bean>
 	
 	
