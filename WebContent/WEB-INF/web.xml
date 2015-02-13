@@ -11,6 +11,7 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
@@ -42,6 +43,8 @@
 
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/*</url-pattern>		
+		<dispatcher>FORWARD</dispatcher>
+   		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 </web-app>

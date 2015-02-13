@@ -8,25 +8,30 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-	<http use-expressions="true">
-		<intercept-url pattern="/**" access="hasRole('user')" />	<!--  check all url-s in this app is the user authenticated -->
-		<form-login/> <!-- Use default login form -->
-		<logout logout-url="/logout" logout-success-url="/index" /> <!--  The logout url --> 
+	<!-- Setup the login form, login and logout url -->
+	<http use-expressions="true" auto-config="true">
+		<intercept-url pattern="/**" access="!isAnonymous()"  />	<!--  check all url-s in this app is the user authenticated // access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"// hasRole('ROLE_USER')-->
+		<form-login 	/> <!-- Use default login form -->
+		<logout logout-url="/j_spring_security_logout" logout-success-url="/index.jsf" /> <!--  The logout url -->
 	</http>
 
 
+
+	<!-- check if the username and the password  matches those from the database -->
 	<authentication-manager>
-	
-		<authentication-provider>
-			<user-service>
-				<user name="user" password="user" authorities="user"/>
-			</user-service>
-		</authentication-provider>
+		<authentication-provider user-service-ref="usersAuthentication" />	
 	</authentication-manager>
 	
-
+	<!-- create bean instance for the authentication manager -->
+	<beans:bean id="usersAuthentication"
+			class="com.аuthentication.UsersAuthentication">
+	</beans:bean>
+	
+	
 
 </beans:beans>
+
+
 
 <!-- 	<form-login authentication-failure-url="/**"
 			default-target-url="/index.jsf" login-page="/**"
@@ -41,4 +46,14 @@
 	</authentication-manager>
 	
 	xmlns:context="http://www.springframework.org/schema/context"  
+	
+	<authentication-manager  alias="authenticationManager">
+		<authentication-provider user-service-ref="employeeDAO" />	
+		  <authentication-provider>
+			<user-service>
+				<user name="user" password="user" authorities="ROLE_USER"/>
+				<user name="admin" password="admin" authorities="ROLE_ADMIN"/>
+				<user name="visitor" password="visitor" authorities="ROLE_VISITOR"/>
+			</user-service>
+	</authentication-manager>
 	-->
