@@ -10,9 +10,9 @@
 
 	<!-- Setup the login form, login and logout url -->
 	<http use-expressions="true" auto-config="true">
-		<intercept-url pattern="/**" access="!isAnonymous()"  />	<!--  check all url-s in this app is the user authenticated // access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"// hasRole('ROLE_USER')-->
-		<form-login 	/> <!-- Use default login form -->
-		<logout logout-url="/j_spring_security_logout" logout-success-url="/index.jsf" /> <!--  The logout url -->
+		<intercept-url pattern="/admin/**" access="!isAnonymous()"  />	<!--  check all url-s in this app is the user authenticated // access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"// hasRole('ROLE_USER')-->
+		<form-login login-page="/login.jsf"	/> <!-- Use default login form -->
+		<logout logout-url="/j_spring_security_logout" logout-success-url="/logout.jsf" /> <!--  The logout url -->
 	</http>
 
 
