@@ -2,14 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html" >
+      xmlns:h="http://java.sun.com/jsf/html"
+       >
  
     <h:head>
         <title>JSF 2.0 Hello World</title>
     </h:head>
     <h:body>
-    
-    	ADMIN <br />
+    	
+    	username: <h:outputText value="#{loginController.user}" /> <br />
+    	password: <h:outputText value="#{loginController.password}" /> <br />
+    	roles: <h:outputText value="#{loginController.roles}" /> <br />
+    	
+    	<h:outputText rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}"  value ="ROLE ADMIN"></h:outputText> <br />
+    	<h:outputText rendered="#{facesContext.externalContext.isUserInRole('ROLE_USER')}"  value ="ROLE USER"></h:outputText>	<br />
+    	
+    	<h:outputText value="foo" rendered="#{MyBean.rednerSubview1Comp1}"/>
+    	
+    	
+    	
+    	
     	
     	 <h:outputLink value="../j_spring_security_logout">logout</h:outputLink> <br />
     	 

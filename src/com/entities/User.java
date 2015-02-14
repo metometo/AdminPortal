@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity(name="user")
@@ -18,7 +19,7 @@ public class User
     private String userName;
     private String password;
 
-    @OneToMany
+    @ManyToMany
     private List<Role> roles = new ArrayList<Role>();
 
     

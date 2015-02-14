@@ -1,10 +1,12 @@
 package com.managedbeans;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
@@ -17,13 +19,24 @@ import javax.servlet.ServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.WebAttributes;
 
+import com.entities.GetSessionFactory;
+import com.entities.HibernateCommonMethods;
+import com.àuthentication.UsersAuthentication;
+
 @ManagedBean(name = "loginController")
-@RequestScoped
+@SessionScoped
 public class LoginController implements PhaseListener
 {
+	private String user;
+	private String password;
+	private ArrayList<String> roles=new ArrayList<String>();
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
@@ -37,7 +50,7 @@ public class LoginController implements PhaseListener
 	 * @throws IOException
 	 */
 	public String doLogin() throws ServletException, IOException
-	{
+	{				
 		ExternalContext context = FacesContext.getCurrentInstance()
 				.getExternalContext();
 
@@ -49,6 +62,8 @@ public class LoginController implements PhaseListener
 
 		FacesContext.getCurrentInstance().responseComplete();
 
+		getRolesFromDatabase(user);
+		
 		return null;
 	}
 
@@ -82,6 +97,8 @@ public class LoginController implements PhaseListener
 							"Username or password not valid.",
 							"Username or password not valid"));
 		}
+		
+		System.out.println("error=========================================");
 	}
 
 	/*
@@ -95,4 +112,71 @@ public class LoginController implements PhaseListener
 	{
 		return PhaseId.RENDER_RESPONSE;
 	}
+
+	public String getUser()
+	{
+		return user;
+	}
+
+	public void setUser(String user)
+	{
+		this.user = user;
+	}
+
+	public String getPassword()
+	{
+		return password;
+	}
+
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
+	public ArrayList<String> getRoles()
+	{
+		return roles;
+	}
+
+	public boolean hasRole(String role)
+	{
+		System.out.println(role + "-------------------------" + roles.size());
+		
+		for (int i = 0; i < roles.size(); i++)
+		{
+			System.out.println(roles.get(i));
+			System.out.println(role + "-------------------------");
+			
+			if (roles.get(i).equals(role))
+				return true;
+		}
+
+		return false;
+	}
+
+	private void getRolesFromDatabase(String userName)
+	{
+		SessionFactory sessionFactory = GetSessionFactory.getInstance();
+		Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
+
+		session.beginTransaction();
+		com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
+																			// session.load(com.entities.User.class,
+																			// 1);
+		session.getTransaction().commit();
+
+
+		roles.clear(); // clear old data from previous session logins
+		if(userEntity!=null)
+		for (int i = 0; i < userEntity.getRoles().size(); i++)
+		{
+			roles.add(userEntity.getRoles().get(i).getAuthority());	// adds all roles to the class array
+		}
+		
+		//System.out.println(roles+"==========================");
+		
+		session.close();
+				
+	}
+
 }
