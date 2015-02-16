@@ -1,25 +1,34 @@
 package com.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchProfile.FetchOverride;
+
 @Entity(name="user")
-public class User
+public class User implements Serializable
 {
     @Id
     @GeneratedValue
     private int id;
     private String userName;
     private String password;
+    
+    private String firstName;
+    private String lastName;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     private List<Role> roles = new ArrayList<Role>();
 
     
@@ -62,6 +71,24 @@ public class User
 	{
 		this.password = password;
 	}
-	
-	
+
+	public String getFirstName()
+	{
+		return firstName;
+	}
+
+	public void setFirstName(String firstName)
+	{
+		this.firstName = firstName;
+	}
+
+	public String getLastName()
+	{
+		return lastName;
+	}
+
+	public void setLastName(String lastName)
+	{
+		this.lastName = lastName;
+	}
 }

@@ -1,0 +1,12 @@
+/* Whole page styles */
+body	{text-align:center; padding:40px;}
+table { margin: 0 auto;  }
+#header	{text-align:left; padding:10px;}
+#logo	{height:40px; }
+#feader-text	{font-size:30pt;}
+
+#content {text-align:center; background:#aaffff; padding:20px;}
+
+/*login page */
+#j_username	{width:200px;}
+#j_password	{width:200px;}

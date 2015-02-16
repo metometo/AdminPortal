@@ -1,34 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"      
+<html xmlns="http://www.w3.org/1999/xhtml"   
+	  xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:h="http://java.sun.com/jsf/html"
- 	 >
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"  
+      >
+    <h:body>
  
-   <h:body>
-  <h:form id="loginForm" prependId="false">
-    <!-- Messages must be global here, to show bad credentials -->
-    <h:messages globalOnly="true" />
-    
-    <h:outputText value="Wrong user name or password." rendered="#{param['authenticated']=='false'}"/>
-               
-    <!-- Id's must not be changed to support spring security check -->
-    <h:panelGrid columns="3">
-    <h:outputLabel for="j_username" value="User: * " />  
-    <h:inputText id="j_username" required="true" label="username" value="#{loginController.user}" />  
-    <h:message for="j_username" display="text" style="color:red"/>
-                   
-    <h:outputLabel for="j_password" value="Password: * " />  
-    <h:inputSecret id="j_password" label="password" required="true" value="#{loginController.password}" />  
-    <h:message for="j_password" display="text" style="color:red"/>
-                   
-    <h:outputLabel for="_spring_security_remember_me" value="Remember me: " />
-    <h:selectBooleanCheckbox    id="_spring_security_remember_me" />        
-    </h:panelGrid>
-           
-    <h:commandButton type="submit" id="login" value="Login"
-        action="#{loginController.doLogin}" />
-    </h:form>
-    
-</h:body>
+    	<ui:composition template="./common/page_template.xhtml">
+ 			
+ 			<ui:define name="header">
+ 				<h:graphicImage value="resources/images/logo.bmp" id="logo" />
+				<span id="feader-text">Admin Portal</span>
+			</ui:define>
+ 			
+ 			
+ 			
+    		<ui:define name="content">	
+    			
+    			<br />
+    			
+    			<h3>
+    			<p:outputLabel value="You are now registered." rendered="#{param['registered']=='true'}" style="color:orange;"/>
+    			</h3>   			
+    			
+    			<br />
+    			
+    			<h:form id="loginForm" prependId="false">
+    			
+				    <!-- Id's must not be changed to support spring security check -->
+				    <h:panelGrid columns="3" cellpadding="5" cellspacing="1">
+					   
+					    <p:outputLabel for="j_username" value="Username:" style="width:400px;" />  
+					    <p:inputText id="j_username" required="true" label="username" value="#{loginController.user}" />  
+					    
+					    <h:panelGroup columns="2"> <!--  Prints first textfield messsage and "wrong user name or password" for the whole form -->
+						    <p:outputLabel value="Wrong user name or password." rendered="#{param['authenticated']=='false'}" style="color:red"/>
+						 	<p:message for="j_username" display="text" style="color:red" />
+						</h:panelGroup>
+					                   
+					    <p:outputLabel for="j_password" value="Password:" />  
+					    <p:password id="j_password" label="password" required="true" value="#{loginController.password}" />  
+					    <p:message for="j_password" display="text" style="color:red"/>
+					                   
+					    <!-- 
+					    <h:outputLabel for="_spring_security_remember_me" value="Remember me: " />
+					    <h:selectBooleanCheckbox id="_spring_security_remember_me" />        
+					    <h:outputText value="&nbsp;" />
+					     -->
+					   
+					    <h:panelGroup columns="2">
+					    	<div style="float:left; text-align:left; padding:5px 0px 0px 0px;">
+								<h:outputLink value="registration.jsf">
+									<p:outputLabel value="Registration" />
+								</h:outputLink>
+							</div>
+							<div style="text-align:right;">
+								<p:commandButton type="submit"  id="login" ajax="false" value="Login" action="#{loginController.doLogin}" />
+							</div>
+						</h:panelGroup>
+					    <h:outputText value="&nbsp;" />
+				    
+				    
+				    </h:panelGrid>
+				    
+				    
+				 
+			
+				 </h:form>
+    			
+    			<br /><br />
+    			
+    		</ui:define>
+
+		</ui:composition>
+ 
+    </h:body>
+ 
 </html>

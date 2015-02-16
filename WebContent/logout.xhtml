@@ -1,15 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html" >
+<html xmlns="http://www.w3.org/1999/xhtml"   
+	  xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"  
+      >
+    <h:body>
  
-   	<h:body>
-  		
-  		<h:outputText value="You are logged out."></h:outputText>
+    	<ui:composition template="./common/page_template.xhtml">
+ 			
+ 			
+ 			<ui:define name="header">
+ 				<h:graphicImage value="resources/images/logo.bmp" id="logo" />
+				<span id="feader-text">Admin Portal</span>
+			</ui:define>
+			
+ 			
+ 			
+ 			<ui:define name="content">
+    			
+    			<br /><br /><br /> 
+    			
+    			<h:outputText value="You are logged out." />
     
-    	<a href="./admin/index.jsf">Log in</a>
-    	
-	</h:body>
-	
+    			&nbsp;			
+    			<h:link value="Log in again" outcome="login" /> 
+    			
+    			<br /><br /><br />
+				  	
+    		</ui:define>
+
+		</ui:composition>
+ 
+    </h:body>
+ 
 </html>

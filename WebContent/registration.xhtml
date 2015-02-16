@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+	  xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"  
+      >
+    <h:body>
+ 
+    	<ui:composition template="./common/page_template.xhtml">
+ 			
+ 			
+ 			<ui:define name="header">
+ 				<h:graphicImage value="resources/images/logo.bmp" id="logo" />
+				<span id="feader-text">Admin Portal</span>
+			</ui:define>
+ 			
+ 			
+ 			<ui:define name="content">	
+    			<br /><br />
+    			
+    			<h:form id="loginForm" prependId="false">
+    			
+				    <!-- Id's must not be changed to support spring security check -->
+				    <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+					   
+					    <p:outputLabel for="firstName" value="First Name:" />  
+					    <p:inputText id="firstName" required="true" value="#{registerController.firstName}" />  
+					    <p:message for="firstName" display="text" style="color:red" />
+					
+					                   
+					    <p:outputLabel for="lastName" value="Last Name:" />  
+					    <p:inputText id="lastName" required="true" value="#{registerController.lastName}" />  
+					    <p:message for="lastName" display="text" style="color:red" />
+					                   
+					    
+					    <p:outputLabel for="username" value="Username:" />  
+					    <p:inputText id="username" required="true" value="#{registerController.username}" />  
+					    <p:message for="username" display="text" style="color:red" />
+					    
+					    <p:outputLabel for="password" value="Password:" />  
+					    <p:password id="password" required="true" value="#{registerController.password}" />  
+					    <p:message for="password" display="text" style="color:red" />
+					    
+					    <p:outputLabel value="Admin"/> 
+					    <h:panelGroup columns="2">
+					    	<p:selectBooleanCheckbox value="#{registerController.adminRole}"/> &nbsp; 
+					    	<p:outputLabel value="Yes" />
+					    </h:panelGroup>
+					    <p:outputLabel value="" />
+					    
+					    <p:outputLabel value="" />
+					    <h:panelGroup columns="2">
+					    	<div style="float:left; text-align:left; padding:5px 0px 0px 0px;">
+								<p:link value="Log in" outcome="login" />
+							</div>
+							<div style="text-align:right;">
+								<p:commandButton type="submit" ajax="false" id="register" value="Register" action="#{registerController.registerNewUser}" />
+							</div>
+						</h:panelGroup>
+					    <p:outputLabel value="&nbsp;" />
+				    
+				    
+				    </h:panelGrid>
+				    
+				    
+				 
+			
+				 </h:form>
+    			
+    			<br /><br />
+    			
+    		</ui:define>
+    	
+    	</ui:composition>		
+ 			
+    </h:body>
+ 
+</html>

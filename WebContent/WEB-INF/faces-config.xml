@@ -4,4 +4,40 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
+    
+    <!-- ************************** -->
+	<!-- 							-->
+	<!-- Custom Validation Messages -->
+	<!-- 							-->
+	<!-- ************************** -->
+
+	<application>
+		<message-bundle>
+			com.bundles.message
+		</message-bundle>
+	</application>
+	
+	
+	<!-- ************************** -->
+	<!-- 							-->
+	<!-- Navigation rules			 -->
+	<!-- 							-->
+	<!-- ************************** -->
+	
+	<navigation-rule>
+		<from-view-id>/registration.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>registered</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+			<redirect include-view-params="true">  
+            	<view-param>  
+                    <name>registered</name>  
+                    <value>true</value>  
+                </view-param>  
+            </redirect>  
+		</navigation-case>
+    </navigation-rule>	
+    
+   
+	
 </faces-config>
