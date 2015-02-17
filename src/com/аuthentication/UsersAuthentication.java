@@ -83,6 +83,4 @@ public class UsersAuthentication implements UserDetailsService  {
         
        	return user;
     }
-
-	
 }

@@ -91,4 +91,12 @@ public class User implements Serializable
 	{
 		this.lastName = lastName;
 	}
+	
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return "id: " + id +", user: " + userName + ", password: " + password + 
+				", first name: " + firstName + ", last name: " + lastName + ", role: " + roles;
+	}
 }

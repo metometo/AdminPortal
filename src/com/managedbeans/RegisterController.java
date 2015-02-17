@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.entities.GetSessionFactory;
+import com.entities.HibernateCommonMethods;
 import com.entities.Role;
 import com.entities.User;
 
@@ -114,7 +116,8 @@ public class RegisterController implements Serializable
 			roles.add(r);
 			u.setRoles(roles);
 			
-			session.saveOrUpdate(u);
+			
+			session.save(u);//OrUpdate(u);
 			
 			session.getTransaction().commit();
 			

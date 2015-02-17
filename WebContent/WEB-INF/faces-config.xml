@@ -36,8 +36,72 @@
                 </view-param>  
             </redirect>  
 		</navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+		<from-view-id>/admin/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>registered</from-outcome>
+			<to-view-id>/admin/index.xhtml</to-view-id>
+			<redirect include-view-params="true">
+				<view-param>  
+                    <name>registered</name>  
+                    <value>true</value>  
+                </view-param>    
+            </redirect>  
+         </navigation-case>
+         <navigation-case>
+            <from-outcome>error</from-outcome>
+			<to-view-id>/admin/index.xhtml</to-view-id>
+			<redirect include-view-params="true">
+				<view-param>  
+                    <name>registered</name>  	
+                    <value>error</value>  
+                </view-param>    
+            </redirect>
+		</navigation-case>
+		<navigation-case>
+            <from-outcome>deleting_error</from-outcome>
+			<to-view-id>/admin/index.xhtml</to-view-id>
+			<redirect include-view-params="true">
+				<view-param>  
+                    <name>deleting</name>  	
+                    <value>error</value>  
+                </view-param>    
+            </redirect>
+		</navigation-case>
     </navigation-rule>	
     
    
+    <navigation-rule>
+		<from-view-id>/admin/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>user_notselected</from-outcome>
+			<to-view-id>/admin/index.xhtml</to-view-id>
+			<redirect include-view-params="true">
+				<view-param>  
+                    <name>edit_user</name>  
+                    <value>user_notselected</value>  
+                </view-param>    
+            </redirect>  
+         </navigation-case>
+         <navigation-case>
+            <from-outcome>user_updated</from-outcome>
+			<to-view-id>/admin/index.xhtml</to-view-id>
+			<redirect include-view-params="true">
+            </redirect>
+		</navigation-case>
+		<navigation-case>
+            <from-outcome>user_updated_error</from-outcome>
+			<to-view-id>/admin/index.xhtml</to-view-id>
+			<redirect include-view-params="true">
+				<view-param>  
+                    <name>edit_user</name>  	
+                    <value>error</value>  
+                </view-param>    
+            </redirect>
+		</navigation-case>
+    </navigation-rule>	
 	
 </faces-config>

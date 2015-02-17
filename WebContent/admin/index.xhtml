@@ -27,65 +27,28 @@
 			        
 			        <p:tab title="Users" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
 			             
-			            <div>
-				            <div style="float:left">
-								<h:panelGrid columns="3" cellpadding="1" cellspacing="1" >			                 
-						                    <p:button value="Add"></p:button>			                
-							                <p:button  value="Edit"></p:button>							
-											<p:button  value="Delete"></p:button>											                
-					            </h:panelGrid>
-				           	</div>
-				           	<div style="clear:both;"></div>
-			            </div>
-			                
-			            <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
-			                <p:dataTable var="user" value="#{usersData.users}" >
-							    <p:column headerText="First Name">
-							        <h:outputText value="#{user.firstName}" />
-							    </p:column>
-							 
-							    <p:column headerText="Last Name">
-							        <h:outputText value="#{user.lastName}" />
-							    </p:column>
-							 
-							   	<p:column headerText="Username">
-							        <h:outputText value="#{user.userName}" />
-							    </p:column>
-							    
-							    <p:column headerText="Password">
-							        <h:outputText value="#{user.password}" />
-							    </p:column>
-							    
-							     <p:column headerText="Roles">
-							        <h:outputText value="#{user.roles}" />  <!-- uses com.entityes.Role toString() to convert the array to string -->
-							     </p:column>
-							    
-							</p:dataTable>
-			                
-			            </h:panelGrid>
+			            <ui:insert name="users_tab" >
+						 	<ui:include src="users_tab.xhtml" />
+						</ui:insert>			             
+			            
 			        </p:tab>
 			        
 			        
 			        <p:tab title="Computers">
-			            <h:panelGrid columns="2" cellpadding="10">
-			                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-			                <h:outputText value="Francis Ford Coppola's legendary..." />
-			            </h:panelGrid>
+			            
+			             <ui:insert name="computers_tab" >
+						 	<ui:include src="computers_tab.xhtml" />
+						</ui:insert>		
+						
 			        </p:tab>
 			        <p:tab title="Applications">
-			            <h:panelGrid columns="2" cellpadding="10">
-			                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-			                <h:outputText value="After a break of more than 15 years..." />
-			            </h:panelGrid>
+			            
+			             <ui:insert name="applications_tab" >
+						 	<ui:include src="applications_tab.xhtml" />
+						 </ui:insert>		
+			            
 			        </p:tab>
 			    </p:tabView>
-    			
-    			
-    			
-    			
-    			
-    			
-		    	
     			
     			<br /><br /><br />
 				  	

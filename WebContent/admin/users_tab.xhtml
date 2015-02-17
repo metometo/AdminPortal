@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+	  xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"  
+      >
+      
+    <h:body>
+
+	<div>
+				            <div style="float:left">
+								<h:panelGrid columns="6" cellpadding="1" cellspacing="1" >			                 
+						                    <h:form>
+							                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAdd').show();" />		                
+								                <p:commandButton value="Edit" type="button"  onclick="PF('dlgEdit').show();" />
+												<p:commandButton value="Delete" ajax="false" action="#{usersData.deleteSelectedUser}" />
+											</h:form>
+											
+											
+																					
+											
+													                
+					            </h:panelGrid>
+				           	</div>
+				           	<div style="clear:both;"></div>
+			            </div>
+			                
+			            <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
+			              
+			               <h:form id="myform">
+			               <p:dataTable var="user" value="#{usersData.users}" 
+			                			  selection="#{usersData.selectedUser}" 
+			                			  selectionMode="single"  rowKey="#{user.firstName}"  
+			                			  >
+			                
+			                	
+			                	<p:ajax event="rowSelect" listener="#{usersData.onRowSelect}" />
+ 			                	           						
+        
+							    <p:column headerText="First Name" sortBy="#{user.firstName}">
+							      		<h:outputText id="name_#{user.id}" value="#{user.firstName}" />							      
+							    </p:column>
+							 
+							    <p:column headerText="Last Name" sortBy="#{user.lastName}">
+							        <h:outputText value="#{user.lastName}" />
+							    </p:column>
+							 
+							   	<p:column headerText="Username" sortBy="#{user.userName}">
+							        <h:outputText value="#{user.userName}" />
+							    </p:column>
+							    
+							    <p:column headerText="Password" sortBy="#{user.password}">
+							        <h:outputText value="#{user.password}" />
+							    </p:column>
+							    
+							     <p:column headerText="Roles" sortBy="#{user.roles}">
+							        <h:outputText value="#{user.roles}" />  <!-- uses com.entityes.Role toString() to convert the array to string -->
+							     </p:column>
+							  
+							    
+							</p:dataTable>
+			                </h:form>
+			            </h:panelGrid>
+			            
+			             	
+			             <h:form id="addForm" prependId="false" binding="#{addForm}">
+			             	<p:dialog id="dlgAdd" header="Add New User" widgetVar="dlgAdd" modal="true" height="300">												
+							
+							   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+								   
+								   	<p:outputLabel for="firstNameEdit" value="First Name:" />  
+								    <p:inputText id="firstNameEdit" required="true" value="#{registerController.firstName}"/>  
+								    <p:message for="firstNameEdit" display="text" style="color:red" />
+								
+								                   
+								    <p:outputLabel for="lastNameEdit" value="Last Name:" />  
+								    <p:inputText id="lastNameEdit" required="true" value="#{registerController.lastName}" />  
+								    <p:message for="lastNameEdit" display="text" style="color:red" />
+								                   
+								    
+								    <p:outputLabel for="usernameEdit" value="Username:" />  
+								    <p:inputText id="usernameEdit" required="true" value="#{registerController.username}" />  
+								    <p:message for="usernameEdit" display="text" style="color:red" />
+								    
+								    <p:outputLabel for="passwordEdit" value="Password:" />  
+								    <p:password id="passwordEdit" required="true" value="#{registerController.password}" />  
+								    <p:message for="passwordEdit" display="text" style="color:red" />
+								    
+								    <p:outputLabel value="Admin"/> 
+								    <h:panelGroup columns="2">
+								    	<p:selectBooleanCheckbox value="#{registerController.adminRole}"/> &nbsp; 
+								    	<p:outputLabel value="Yes" />
+								    </h:panelGroup>
+								    <p:outputLabel value="" />
+								    
+								    <p:outputLabel value="" />
+								   <p:commandButton type="submit" ajax="true" id="register" value="Add user" action="#{registerController.registerNewUser}" 
+								   	oncomplete="if (args.validationFailed) alert('All fields are required');"
+								   >
+									</p:commandButton>
+								    <p:outputLabel value="&nbsp;" />
+									
+							    </h:panelGrid>						
+							</p:dialog>				 
+						</h:form>
+			            
+			            
+			            
+			            
+			           
+			           <h:form id="editForm" prependId="false" binding="#{editForm}">
+			             	<p:dialog id="dlgEdit" header="Edit User" widgetVar="dlgEdit" modal="true" height="300">												
+							
+							<h:panelGroup rendered="#{usersData.selectedUser.userName!=null}">
+							   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+								   
+								   
+								    <p:outputLabel for="username" value="Username:" />  
+								    <p:outputLabel id="username" value="#{usersData.selectedUser.userName}" />  
+								    <p:message for="username" display="text" style="color:red" />
+								    
+								    
+								   	<p:outputLabel for="firstName" value="First Name:" />  
+								    <h:inputText id="firstName" required="true" value="#{updateUserController.newFirstName}"/>  
+								    <p:message for="firstName" display="text" style="color:red" />
+								   
+								                   
+								    <p:outputLabel for="lastName" value="Last Name:" />  
+								    <p:inputText id="lastName" required="true" value="#{updateUserController.newLastName}" />  
+								    <p:message for="lastName" display="text" style="color:red" />
+								    
+								    
+								    <p:outputLabel for="password" value="Password:" />  
+								    <p:password id="password" required="true" value="#{updateUserController.newPassword}" />  
+								    <p:message for="password" display="text" style="color:red" />
+								    
+								    <p:outputLabel value="Admin"/> 
+								    <h:panelGroup columns="2">
+								    	<p:selectBooleanCheckbox value="#{updateUserController.newAdminRole}"/> &nbsp; 
+								    	<p:outputLabel value="Yes" />
+								    </h:panelGroup>
+								    <p:outputLabel value="" />
+								    
+								    <p:outputLabel value="" />
+								   <p:commandButton type="submit" ajax="true" id="edit" value="Update" action="#{updateUserController.editNewUser}" 
+								   	oncomplete="if (args.validationFailed) alert('All fields are required');"
+								   >
+									</p:commandButton>
+								    <p:outputLabel value="&nbsp;" />
+									
+							    </h:panelGrid>
+							    
+							     </h:panelGroup>
+							     
+							     <h:panelGroup rendered="#{usersData.selectedUser.userName==null}">
+							     	<br /><br />
+							     	<p:outputLabel value="Plese, first select user from the table and then click 'Edit'."></p:outputLabel>
+							     </h:panelGroup>
+							     
+							  </p:dialog>				 
+						</h:form>
+			           
+			          
+
+</h:body>
+</html>
