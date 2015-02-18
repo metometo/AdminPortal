@@ -1,4 +1,4 @@
-package com.entities;
+package com.entities_and_database;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,24 +12,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchProfile.FetchOverride;
 
 @Entity(name="user")
+@Table(uniqueConstraints =  @UniqueConstraint(columnNames = {"userName"}))
 public class User implements Serializable
 {
     @Id
     @GeneratedValue
     private int id;
+    
+  
     private String userName;
     private String password;
     
     private String firstName;
     private String lastName;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    private List<Role> roles = new ArrayList<Role>();
+    //@ManyToMany(cascade=CascadeType.ALL)
+    //private List<Role> roles = new ArrayList<Role>();
+    String role;
 
     
 	public int getId()
@@ -52,19 +58,29 @@ public class User implements Serializable
 		this.userName = userName;
 	}
 
-	public List<Role> getRoles()
-	{
-		return roles;
-	}
-	
-	public void setRoles(List<Role> roles)
-	{
-		this.roles = roles;
-	}
+//	public List<Role> getRoles()
+//	{
+//		return roles;
+//	}
+//	
+//	public void setRoles(List<Role> roles)
+//	{
+//		this.roles = roles;
+//	}
 
 	public String getPassword()
 	{
 		return password;
+	}
+
+	public String getRole()
+	{
+		return role;
+	}
+
+	public void setRole(String role)
+	{
+		this.role = role;
 	}
 
 	public void setPassword(String password)
@@ -97,6 +113,6 @@ public class User implements Serializable
 	{
 		// TODO Auto-generated method stub
 		return "id: " + id +", user: " + userName + ", password: " + password + 
-				", first name: " + firstName + ", last name: " + lastName + ", role: " + roles;
+				", first name: " + firstName + ", last name: " + lastName + ", role: " + role;
 	}
 }

@@ -17,8 +17,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import com.entities.GetSessionFactory;
-import com.entities.HibernateCommonMethods;
+import com.entities_and_database.GetSessionFactory;
+import com.entities_and_database.HibernateCommonMethods;
+import com.entities_and_database.Role;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QEncoderStream;
  
 @Repository
@@ -68,13 +69,17 @@ public class UsersAuthentication implements UserDetailsService  {
         
         
         session.beginTransaction();
-        com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(username, session);//(com.entities.User) session.load(com.entities.User.class, 1);
+        com.entities_and_database.User userEntity = HibernateCommonMethods.getUserbyUsername(username, session);//(com.entities.User) session.load(com.entities.User.class, 1);
         session.getTransaction().commit();
         
+        ArrayList<Role> role = new ArrayList<Role>();
+        Role r = new Role();
+        r.setUserRole(userEntity.getRole());
+        role.add(r);
         
         UserDetails user = null;
         if(userEntity!=null)
-        	user = new User(userEntity.getUserName(), userEntity.getPassword(), userEntity.getRoles());
+        	user = new User(userEntity.getUserName(), userEntity.getPassword(), role);
         //else
         	//user = new User(username, null, null);
                 		

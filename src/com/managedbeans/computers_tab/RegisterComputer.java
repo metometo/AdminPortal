@@ -1,4 +1,4 @@
-package com.managedbeans;
+package com.managedbeans.computers_tab;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,71 +13,77 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.entities_and_database.Computer;
 import com.entities_and_database.GetSessionFactory;
 import com.entities_and_database.HibernateCommonMethods;
 import com.entities_and_database.Role;
 import com.entities_and_database.User;
+import com.managedbeans.TableActiveTabManager;
 import com.managedbeans.users_tab.UsersTable;
 
-@ManagedBean(name = "registerController")
+@ManagedBean(name = "registerComputer")
 @SessionScoped
-public class RegisterController implements Serializable
+public class RegisterComputer implements Serializable
 {
-	private String firstName;
-	private String lastName;
-	private String username;
+	private String name;
+	private String ip;
+	private String login;
 	private String password;
-	private boolean adminRole;
 	
-	@ManagedProperty(value = "#{usersData}")
-	UsersTable usersData;
+//	private String firstName;
+//	private String lastName;
+//	private String username;
+//	private String password;
+//	private boolean adminRole;
+	
+	@ManagedProperty(value = "#{computersData}")
+	ComputersTable computersData;
+	
+	@ManagedProperty(value = "#{tableActiveTabManager}")
+	TableActiveTabManager tableActiveTabManager;
+
+	public TableActiveTabManager getTableActiveTabManager()
+	{
+		return tableActiveTabManager;
+	}
+
+	public void setTableActiveTabManager(TableActiveTabManager tableActiveTabManager)
+	{
+		this.tableActiveTabManager = tableActiveTabManager;
+	}
+	
+	public ComputersTable getComputersData()
+	{
+		return computersData;
+	}
+
+	public void setComputersData(ComputersTable computersData)
+	{
+		this.computersData = computersData;
+	}
+
 	
 	
-	
-	public UsersTable getUsersData()
+
+	public String getName()
 	{
-		return usersData;
+		return name;
 	}
 
-	public void setUsersData(UsersTable usersData)
+	public void setName(String name)
 	{
-		this.usersData = usersData;
+		this.name = name;
 	}
 
-	public String getFirstName()
+	public String getLogin()
 	{
-		return firstName;
+		return login;
 	}
 
-	public void setFirstName(String firstName)
+	public void setLogin(String login)
 	{
-		this.firstName = firstName;
+		this.login = login;
 	}
-
-
-	public String getLastName()
-	{
-		return lastName;
-	}
-
-	public void setLastName(String lastName)
-	{
-		this.lastName = lastName;
-	}
-
-
-
-	public String getUsername()
-	{
-		return username;
-	}
-
-	public void setUsername(String username)
-	{
-		this.username = username;
-	}
-
-
 
 	public String getPassword()
 	{
@@ -89,20 +95,20 @@ public class RegisterController implements Serializable
 		this.password = password;
 	}
 
-
-
-	public boolean getAdminRole()
+	
+	
+	
+	public String getIp()
 	{
-		return adminRole;
+		return ip;
 	}
 
-	public void setAdminRole(boolean adminRole)
+	public void setIp(String ip)
 	{
-		this.adminRole = adminRole;
+		this.ip = ip;
 	}
 
-
-	public String registerNewUser()
+	public String registerNewComputer()
 	{
 		try
 		{
@@ -113,32 +119,17 @@ public class RegisterController implements Serializable
 			//com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
 				
 			// crate User object and sava it to the database
-			User u = new User();
-			u.setFirstName(firstName);
-			u.setLastName(lastName);
-			u.setUserName(username);
-			u.setPassword(password);
-			
-//			ArrayList<Role> roles = new ArrayList<Role>();
-//			Role r = new Role();
-			
-		
-			if(adminRole)
-			{
-				//r.setUserRole("ROLE_ADMIN");	
-				u.setRole("ROLE_ADMIN");
-			}
-			else
-			{
-				//r.setUserRole("ROLE_USER");
-				u.setRole("ROLE_USER");
-			}
-			
-			//roles.add(r);
-			//u.setRoles(roles);
+			Computer c = new Computer();
+			c.setIp(ip);
+			c.setLogin(login);
+			c.setName(name);
+			c.setPassword(password);
 			
 			
-			session.save(u);//OrUpdate(u);
+			
+			
+			
+			session.save(c);//OrUpdate(u);
 			
 			session.getTransaction().commit();
 			
@@ -147,11 +138,13 @@ public class RegisterController implements Serializable
 			// user registered
 			// Update the /admin/index.xhtml table 
 			// TODO: do not refresh always, only when the page is /admin/index.xhtml (when the page is registration.xhtml - do not refres)
-			usersData.loadUsersFromDatabase();
+			computersData.loadComputersFromDatabase();
 			
 			
 			// invalidate session - clear all session saved variables
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+			
+			tableActiveTabManager.setActiveTab(TableActiveTabManager.COMPUTERS_TAB);
 			
 			return "registered";
 		}

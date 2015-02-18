@@ -36,8 +36,17 @@
                 </view-param>  
             </redirect>  
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>user_exist</from-outcome>
+			<to-view-id>/registration.xhtml</to-view-id>
+			<redirect include-view-params="true">  
+            	<view-param>  
+                    <name>registered</name>  
+                    <value>user_exist</value>  
+                </view-param>  
+            </redirect>  
+		</navigation-case>
     </navigation-rule>
-    
     
     <navigation-rule>
 		<from-view-id>/admin/index.xhtml</from-view-id>

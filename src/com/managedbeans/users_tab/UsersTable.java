@@ -1,4 +1,4 @@
-package com.managedbeans;
+package com.managedbeans.users_tab;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -26,10 +26,11 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.SelectableDataModel;
 
-import com.entities.GetSessionFactory;
-import com.entities.HibernateCommonMethods;
-import com.entities.Role;
-import com.entities.User;
+import com.entities_and_database.GetSessionFactory;
+import com.entities_and_database.HibernateCommonMethods;
+import com.entities_and_database.Role;
+import com.entities_and_database.User;
+import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name="usersData")
 @SessionScoped
@@ -41,6 +42,19 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 	private int selectedUserId;
 	private List<User> users = new ArrayList<User>();
 	private ArrayList<ArrayList<String>> userRoles = new ArrayList<ArrayList<String>>();
+	
+	@ManagedProperty(value = "#{tableActiveTabManager}")
+	TableActiveTabManager tableActiveTabManager;
+
+	public TableActiveTabManager getTableActiveTabManager()
+	{
+		return tableActiveTabManager;
+	}
+
+	public void setTableActiveTabManager(TableActiveTabManager tableActiveTabManager)
+	{
+		this.tableActiveTabManager = tableActiveTabManager;
+	}
 	
 	public int getSelectedUserId()
 	{
@@ -70,23 +84,23 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 		session.beginTransaction();
 
 		SQLQuery query = session.createSQLQuery("select * from user s");
-		query.addEntity(com.entities.User.class);
+		query.addEntity(com.entities_and_database.User.class);
 		
 		
 		users = query.list();
 		
-		//System.out.println(users.get(0).getRoles());// call roles to pull them from the database
-		for (int i = 0; i < users.size(); i++)
-		{
-			ArrayList<String> singleUserRoles = new ArrayList<String>();
-			
-			for (int j = 0; j < users.get(i).getRoles().size(); j++)
-			{
-				singleUserRoles.add(users.get(i).getRoles().get(j).getAuthority());// call to load the data from the databse
-			}
-			
-			userRoles.add(singleUserRoles);
-		}
+//		//System.out.println(users.get(0).getRoles());// call roles to pull them from the database
+//		for (int i = 0; i < users.size(); i++)
+//		{
+//			ArrayList<String> singleUserRoles = new ArrayList<String>();
+//			
+//			for (int j = 0; j < users.get(i).getRoles().size(); j++)
+//			{
+//				singleUserRoles.add(users.get(i).getRoles().get(j).getAuthority());// call to load the data from the databse
+//			}
+//			
+//			userRoles.add(singleUserRoles);
+//		}
 		
 		
 		session.getTransaction().commit();
@@ -167,6 +181,8 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 					 // Update the table
 					 loadUsersFromDatabase();
 					 
+					 tableActiveTabManager.setActiveTab(TableActiveTabManager.USERS_TAB);
+					 
 					 return null;
 					 
 					 
@@ -206,6 +222,7 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 				{
 					selectedUser = u;
 					System.out.println("User Selected: " + selectedUser.getUserName() + ", id: " + selectedUserId);
+					tableActiveTabManager.setActiveTab(TableActiveTabManager.USERS_TAB);
 					break;
 				}
 			}
@@ -312,57 +329,57 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 //		 
 		 
 		 
-		 public void onRowEdit(RowEditEvent event) {
-		        FacesMessage msg = new FacesMessage("Car Edited", ((User) event.getObject()).getId()+"");
-		        FacesContext.getCurrentInstance().addMessage(null, msg);
-		        
-		        System.out.println("row edit: " + ((User) event.getObject()));
-		    }
-		     
-		    public void onRowCancel(RowEditEvent event) {
-		        FacesMessage msg = new FacesMessage("Edit Cancelled", ((User) event.getObject()).getId()+"");
-		        FacesContext.getCurrentInstance().addMessage(null, msg);
-		        
-		        System.out.println("row edit canceled: " + ((User) event.getObject()));
-		    }
-		     
-		    public void onCellEdit(CellEditEvent event) {
-		        Object oldValue = event.getOldValue();
-		        Object newValue = event.getNewValue();
-		         
-		        if(newValue != null && !newValue.equals(oldValue)) {
-		            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-		            FacesContext.getCurrentInstance().addMessage(null, msg);
-		      
-		        
-		        System.out.println("Cell Changed: Old: " + oldValue + ", New:" + newValue);
-		        System.out.println("selected user: "+selectedUserId);
-		        
-//		        for (int i = 0; i < users.size(); i++)
-//				{
-//		        	if(users.get(i).getId()==selectedUserId)
-//		            {
-//		        		System.out.println("user: "+users.get(i));
-//		        		break;
-//		            }
-//		        	
-//				}
-		        
-		        }
-		    
-		    }
-		    
-		    public void rowEdit(RowEditEvent ev){
-		        
-		        try {
-		            User car = (User)ev.getObject();
-//		            CarJpaController ctrlCar = new CarJpaController();
+//		 public void onRowEdit(RowEditEvent event) {
+//		        FacesMessage msg = new FacesMessage("Car Edited", ((User) event.getObject()).getId()+"");
+//		        FacesContext.getCurrentInstance().addMessage(null, msg);
+//		        
+//		        System.out.println("row edit: " + ((User) event.getObject()));
+//		    }
+//		     
+//		    public void onRowCancel(RowEditEvent event) {
+//		        FacesMessage msg = new FacesMessage("Edit Cancelled", ((User) event.getObject()).getId()+"");
+//		        FacesContext.getCurrentInstance().addMessage(null, msg);
+//		        
+//		        System.out.println("row edit canceled: " + ((User) event.getObject()));
+//		    }
+//		     
+//		    public void onCellEdit(CellEditEvent event) {
+//		        Object oldValue = event.getOldValue();
+//		        Object newValue = event.getNewValue();
+//		         
+//		        if(newValue != null && !newValue.equals(oldValue)) {
+//		            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+//		            FacesContext.getCurrentInstance().addMessage(null, msg);
+//		      
+//		        
+//		        System.out.println("Cell Changed: Old: " + oldValue + ", New:" + newValue);
+//		        System.out.println("selected user: "+selectedUserId);
+//		        
+////		        for (int i = 0; i < users.size(); i++)
+////				{
+////		        	if(users.get(i).getId()==selectedUserId)
+////		            {
+////		        		System.out.println("user: "+users.get(i));
+////		        		break;
+////		            }
+////		        	
+////				}
+//		        
+//		        }
+//		    
+//		    }
+//		    
+//		    public void rowEdit(RowEditEvent ev){
+//		        
+//		        try {
+//		            User car = (User)ev.getObject();
+////		            CarJpaController ctrlCar = new CarJpaController();
+////
+////		            ctrlCar.edit(car);
+//		            System.out.println("Row edit: " + car);
 //
-//		            ctrlCar.edit(car);
-		            System.out.println("Row edit: " + car);
-
-		        } catch (Exception e) {
-		            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRORE", e.toString()));
-		        }
-		    }
+//		        } catch (Exception e) {
+//		            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRORE", e.toString()));
+//		        }
+//		    }
 }

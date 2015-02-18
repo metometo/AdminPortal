@@ -1,4 +1,4 @@
-package com.managedbeans;
+package com.managedbeans.users_tab;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,10 +11,11 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.entities.GetSessionFactory;
-import com.entities.HibernateCommonMethods;
-import com.entities.Role;
-import com.entities.User;
+import com.entities_and_database.GetSessionFactory;
+import com.entities_and_database.HibernateCommonMethods;
+import com.entities_and_database.Role;
+import com.entities_and_database.User;
+import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name = "updateUserController")
 @RequestScoped
@@ -25,11 +26,37 @@ public class EditUserController implements Serializable
 	private String newUsername;
 	private String newPassword;
 	private boolean newAdminRole;
+	//private String role;
 	
+
 	@ManagedProperty(value = "#{usersData}")
 	UsersTable usersData;
 	
+	@ManagedProperty(value = "#{tableActiveTabManager}")
+	TableActiveTabManager tableActiveTabManager;
+
+	public TableActiveTabManager getTableActiveTabManager()
+	{
+		return tableActiveTabManager;
+	}
+
+	public void setTableActiveTabManager(TableActiveTabManager tableActiveTabManager)
+	{
+		this.tableActiveTabManager = tableActiveTabManager;
+	}
 	
+//	public String getRole()
+//	{
+//		return role;
+//	}
+
+
+
+//	public void setRole(String role)
+//	{
+//		this.role = role;
+//	}
+
 
 	public UsersTable getUsersData()
 	{
@@ -142,22 +169,23 @@ public class EditUserController implements Serializable
 			u.setLastName(newLastName);
 			//u.setUserName(newUsername);	// user name do not change
 			u.setPassword(newPassword);
+			//u.setRole(role);
 			
-			ArrayList<Role> roles = new ArrayList<Role>();
-			Role r = new Role();
+//			ArrayList<Role> roles = new ArrayList<Role>();
+//			Role r = new Role();
 			
 			// TODO: REFACTOR TO USE THE CREATED ROLES INSTEAD OF CREATING NEW WITH THE SAME NAME
 			if(newAdminRole)
 			{
-				r.setUserRole("ROLE_ADMIN");	
+				u.setRole("ROLE_ADMIN");	
 			}
 			else
 			{
-				r.setUserRole("ROLE_USER");	
+				u.setRole("ROLE_USER");	
 			}
-			
-			roles.add(r);
-			u.setRoles(roles);			
+//			
+//			roles.add(r);
+//			u.setRoles(roles);			
 			
 			session.update(u);//OrUpdate(u);
 
@@ -168,6 +196,8 @@ public class EditUserController implements Serializable
 			// User updated
 			// Update the table
 			usersData.loadUsersFromDatabase();
+			
+			tableActiveTabManager.setActiveTab(TableActiveTabManager.USERS_TAB);
 			
 			return "user_updated";
 		}

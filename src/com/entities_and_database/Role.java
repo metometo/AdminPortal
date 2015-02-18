@@ -1,4 +1,4 @@
-package com.entities;
+package com.entities_and_database;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,12 +12,11 @@ import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 
-@Entity(name="role")
+
 public class Role implements GrantedAuthority, Serializable
 {
-    @Id
-    @GeneratedValue
-    private int id;	// user id
+   
+    //private int id;	// user id
     
     String userRole;	// user role
 

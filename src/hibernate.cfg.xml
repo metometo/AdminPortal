@@ -21,9 +21,9 @@
     <property name="connection.pool_size">1</property>
     <property name="current_session_context_class">thread</property>
  
-     <mapping class="com.entities.Role" />
-     <mapping class="com.entities.User" />
+     <mapping class="com.entities_and_database.Computer" />
+     <mapping class="com.entities_and_database.Application" />
+     <mapping class="com.entities_and_database.User" />
  
- <!-- <mapping resource="com/mkyong/user/DBUser.hbm.xml"></mapping> -->
 </session-factory>
 </hibernate-configuration>

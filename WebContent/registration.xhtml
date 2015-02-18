@@ -37,12 +37,17 @@
 					                   
 					    
 					    <p:outputLabel for="username" value="Username:" />  
-					    <p:inputText id="username" required="true" value="#{registerController.username}" />  
-					    <p:message for="username" display="text" style="color:red" />
+					    <p:inputText id="username" required="true" value="#{registerController.username}" style="#{param['registered']=='user_exist' ? 'border:1px solid red' : '' }"/>  
+					    <h:panelGroup>
+					    	<p:message for="username" display="text" style="color:red" />
+					    	<p:outputLabel value="This username is already taken." rendered="#{param['registered']=='user_exist'}" style="color:red"/>
+					    </h:panelGroup>
+					    
 					    
 					    <p:outputLabel for="password" value="Password:" />  
 					    <p:password id="password" required="true" value="#{registerController.password}" />  
-					    <p:message for="password" display="text" style="color:red" />
+					    <p:message for="password" display="text" style="color:red" />						    						    					    
+					    
 					    
 					    <p:outputLabel value="Admin"/> 
 					    <h:panelGroup columns="2">

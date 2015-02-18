@@ -16,7 +16,7 @@
 						                    <h:form>
 							                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAdd').show();" />		                
 								                <p:commandButton value="Edit" disabled="#{usersData.selectedUser.userName==null}" type="button"  onclick="PF('dlgEdit').show();" />
-												<p:commandButton value="Delete" disabled="#{usersData.selectedUser.userName==null}" ajax="false" action="#{usersData.deleteSelectedUser}" />
+												<p:commandButton value="Delete" disabled="#{usersData.selectedUser.userName==null}" ajax="false" onclick="return confirm('Are you sure you want to delete user \'#{usersData.selectedUser.firstName} #{usersData.selectedUser.lastName}\'?');" action="#{usersData.deleteSelectedUser}" />
 											</h:form>
 											
 											
@@ -56,8 +56,8 @@
 							        <h:outputText value="#{user.password}" />
 							    </p:column>
 							    
-							     <p:column headerText="Roles" sortBy="#{user.roles}">
-							        <h:outputText value="#{user.roles}" />  <!-- uses com.entityes.Role toString() to convert the array to string -->
+							     <p:column headerText="Roles" sortBy="#{user.role}">
+							        <h:outputText value="#{user.role}" />  <!-- uses com.entityes.Role toString() to convert the array to string -->
 							     </p:column>
 							  
 							    

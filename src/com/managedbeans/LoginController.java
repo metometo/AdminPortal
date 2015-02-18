@@ -26,8 +26,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.WebAttributes;
 
-import com.entities.GetSessionFactory;
-import com.entities.HibernateCommonMethods;
+import com.entities_and_database.GetSessionFactory;
+import com.entities_and_database.HibernateCommonMethods;
 import com.àuthentication.UsersAuthentication;
 
 @ManagedBean(name = "loginController")
@@ -36,9 +36,10 @@ public class LoginController implements PhaseListener
 {
 	private String user;
 	private String password;
+	//private String role;
 	private ArrayList<String> roles=new ArrayList<String>();
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	//protected final Log logger = LogFactory.getLog(getClass());
 
 	/**
 	 *
@@ -87,7 +88,7 @@ public class LoginController implements PhaseListener
 
 		if (e instanceof BadCredentialsException)
 		{
-			logger.debug("Found exception in session map: " + e);
+			//logger.debug("Found exception in session map: " + e);
 			FacesContext.getCurrentInstance().getExternalContext()
 					.getSessionMap()
 					.put(WebAttributes.AUTHENTICATION_EXCEPTION, null);
@@ -160,18 +161,21 @@ public class LoginController implements PhaseListener
 		Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
 
 		session.beginTransaction();
-		com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
+		com.entities_and_database.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
 																			// session.load(com.entities.User.class,
 																			// 1);
 		session.getTransaction().commit();
 
 
 		roles.clear(); // clear old data from previous session logins
-		if(userEntity!=null)
-		for (int i = 0; i < userEntity.getRoles().size(); i++)
-		{
-			roles.add(userEntity.getRoles().get(i).getAuthority());	// adds all roles to the class array
-		}
+		
+		if(userEntity!=null)	// user exists
+		roles.add(userEntity.getRole());	// adds all roles to the class array
+//		if(userEntity!=null)
+//		for (int i = 0; i < userEntity.getRole().size(); i++)
+//		{
+//			roles.add(userEntity.getRoles().get(i).getAuthority());	// adds all roles to the class array
+//		}
 		
 		//System.out.println(roles+"==========================");
 		

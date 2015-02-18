@@ -1,4 +1,4 @@
-package com.entities;
+package com.entities_and_database;
 
 import java.util.List;
 
@@ -7,12 +7,12 @@ import org.hibernate.Session;
 
 public class HibernateCommonMethods
 {
-	public static com.entities.User getUserbyUsername(String username, Session session)
+	public static com.entities_and_database.User getUserbyUsername(String username, Session session)
 	{
 		SQLQuery query = session.createSQLQuery("select * from user s where s.userName = :usrname");
-				query.addEntity(com.entities.User.class);
+				query.addEntity(com.entities_and_database.User.class);
 				query.setParameter("usrname", username);
-				List<com.entities.User> users = query.list();
+				List<com.entities_and_database.User> users = query.list();
 				
 		if(users!=null)
 			if(users.size()==1)

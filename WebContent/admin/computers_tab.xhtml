@@ -9,12 +9,135 @@
       >
       
     <h:body>
+
+		<div>
+            <div style="float:left">
+				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" >			                 
+		                    <h:form>
+			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddComputer').show();" />		                
+				                <p:commandButton value="Edit" disabled="#{computersData.selectedComputer.name==null}" type="button"  onclick="PF('dlgEditComputer').show();" />
+								<p:commandButton value="Delete" disabled="#{computersData.selectedComputer.name==null}" ajax="false" onclick="return confirm('Are you sure you want to delete user \'#{computersData.selectedComputer.name} #{computersData.selectedComputer.name}\'?');" action="#{computersData.deleteSelectedComputer}" />
+							</h:form>
+									                
+	            </h:panelGrid>
+           	</div>
+           	<div style="clear:both;"></div>
+    	</div>
+               
+	    <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
+	            
+            <h:form id="computerDataTable">
+            <p:dataTable var="computer" value="#{computersData.computers}" 
+             			  selection="#{computersData.selectedComputer}" 
+             			  selectionMode="single"  rowKey="#{computer.id}"  
+             			  >
+             
+	              	
+	            <p:ajax event="rowSelect" listener="#{computersData.onRowSelect}" />
+	
+				<p:column headerText="Computer ID" sortBy="#{computer.id}">
+		      		<h:outputText value="#{computer.id}" />							      
+				</p:column>	                	           						
+		   
+			    <p:column headerText="Name" sortBy="#{computer.name}">
+			      		<h:outputText value="#{computer.name}" />							      
+			    </p:column>
+			 
+			    <p:column headerText="IP" sortBy="#{computer.ip}">
+			        <h:outputText value="#{computer.ip}" />
+			    </p:column>
+			 
+			   	<p:column headerText="Login" sortBy="#{computer.login}">
+			        <h:outputText value="#{computer.login}" />
+			    </p:column>
+			    
+			    <p:column headerText="Password" sortBy="#{computer.password}">
+			        <h:outputText value="#{computer.password}" />
+			    </p:column>
+			    
+			  
+			    
+			</p:dataTable>
+	   		</h:form>
+	   		
+	   	</h:panelGrid>
+	          
+	           	
+	    <h:form id="addComputerForm" prependId="false" binding="#{addComputerForm}">
+		<p:dialog id="dlgAddComputer" header="Add New Computer" widgetVar="dlgAddComputer" modal="true" height="300">												
 			
-			<div style="float:left">
-				
-				Under construction.
+			<h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+				   
+			<p:outputLabel for="computerNameAddComputer" value="Computer Name:" />  
+			<p:inputText id="computerNameAddComputer" required="true" value="#{registerComputer.name}"/>  
+			<p:message for="computerNameAddComputer" display="text" style="color:red" />
+
+				                   
+		    <p:outputLabel for="ipAddComputer" value="IP:" />  
+		    <p:inputText id="ipAddComputer" required="true" value="#{registerComputer.ip}" />  
+		    <p:message for="ipAddComputer" display="text" style="color:red" />
+		                   
+				    
+		    <p:outputLabel for="loginAddComputer" value="Login:" />  
+		    <p:inputText id="loginAddComputer" required="true" value="#{registerComputer.login}" />  
+		    <p:message for="loginAddComputer" display="text" style="color:red" />
+		    
+		    <p:outputLabel for="passwordAddComputer" value="Password:" />  
+		    <p:password id="passwordAddComputer" required="true" value="#{registerComputer.password}" />  
+		    <p:message for="passwordAddComputer" display="text" style="color:red" />
+		    
+		    
+		    <p:outputLabel value="" />
+		   	<p:commandButton type="submit" ajax="true" id="addComputer" value="Add computer" action="#{registerComputer.registerNewComputer}" 
+		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
+		   		/>
+		    <p:outputLabel value="&nbsp;" />
 			
-			</div>
+	    </h:panelGrid>						
+	</p:dialog>				 
+	</h:form>
+           
+           
+           
+           
+          
+	<h:form id="editComputerForm" prependId="false" binding="#{editComputerForm}">
+	<p:dialog id="dlgEditComputer" header="Edit Computer" widgetVar="dlgEditComputer" modal="true" height="300">												
+	
+	
+	   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+		   
+		    <p:outputLabel for="nameEditComputer" value="Computer Name:" />  
+		    <p:outputLabel id="nameEditComputer" value="#{computersData.selectedComputer.name}" />  
+		    <p:message for="nameEditComputer" display="text" style="color:red" />
+		    
+		    
+		    <p:outputLabel for="ipEditComputer" value="IP:" />  
+		    <p:inputText id="ipEditComputer" required="true" value="#{editComputer.newIP}" />  
+		    <p:message for="ipEditComputer" display="text" style="color:red" />
+		                   
+		    
+		    <p:outputLabel for="loginEditComputer" value="Login:" />  
+		    <p:inputText id="loginEditComputer" required="true" value="#{editComputer.newLogin}" />  
+		    <p:message for="loginEditComputer" display="text" style="color:red" />
+		    
+		    <p:outputLabel for="passwordEditComputer" value="Password:" />  
+		    <p:password id="passwordEditComputer" required="true" value="#{editComputer.newPassword}" />  
+		    <p:message for="passwordEditComputer" display="text" style="color:red" />
+		    
+		    
+		    <p:outputLabel value="" />
+		   	<p:commandButton type="submit" ajax="true" id="editComputer" value="Edit computer" action="#{editComputer.editComputer}" 
+		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
+		   	>
+			</p:commandButton>
+		    <p:outputLabel value="&nbsp;" />
+			
+	    </h:panelGrid>
+	    
+	    
+	 </p:dialog>	 
+	 </h:form>
 
 </h:body>
 </html>

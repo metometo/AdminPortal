@@ -9,7 +9,8 @@
       >
       
     <h:body>
- 
+  		
+  		
     	<ui:composition template="../common/page_template.xhtml">
  	
  			<ui:define name="header">
@@ -23,7 +24,9 @@
  			
  			<ui:define name="content">
     			
-			    <p:tabView orientation="left">
+    			
+    			
+			    <p:tabView orientation="left" activeIndex="#{tableActiveTabManager.activeIndex}">
 			        
 			        <p:tab title="Users" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
 			             
