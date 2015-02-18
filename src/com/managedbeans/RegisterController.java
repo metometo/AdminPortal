@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import org.hibernate.Hibernate;
@@ -25,6 +26,21 @@ public class RegisterController implements Serializable
 	private String password;
 	private boolean adminRole;
 	
+	@ManagedProperty(value = "#{usersData}")
+	UsersTable usersData;
+	
+	
+	
+	public UsersTable getUsersData()
+	{
+		return usersData;
+	}
+
+	public void setUsersData(UsersTable usersData)
+	{
+		this.usersData = usersData;
+	}
+
 	public String getFirstName()
 	{
 		return firstName;
@@ -122,6 +138,11 @@ public class RegisterController implements Serializable
 			session.getTransaction().commit();
 			
 			session.close();
+			
+			// user registered
+			// Update the /admin/index.xhtml table 
+			// TODO: do not refresh always, only when the page is /admin/index.xhtml (when the page is registration.xhtml - do not refres)
+			usersData.loadUsersFromDatabase();
 			
 			return "registered";
 		}

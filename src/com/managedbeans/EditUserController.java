@@ -165,6 +165,10 @@ public class EditUserController implements Serializable
 			
 			session.close();
 			
+			// User updated
+			// Update the table
+			usersData.loadUsersFromDatabase();
+			
 			return "user_updated";
 		}
 		catch(Exception ex)

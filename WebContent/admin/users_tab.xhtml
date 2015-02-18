@@ -15,8 +15,8 @@
 								<h:panelGrid columns="6" cellpadding="1" cellspacing="1" >			                 
 						                    <h:form>
 							                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAdd').show();" />		                
-								                <p:commandButton value="Edit" type="button"  onclick="PF('dlgEdit').show();" />
-												<p:commandButton value="Delete" ajax="false" action="#{usersData.deleteSelectedUser}" />
+								                <p:commandButton value="Edit" disabled="#{usersData.selectedUser.userName==null}" type="button"  onclick="PF('dlgEdit').show();" />
+												<p:commandButton value="Delete" disabled="#{usersData.selectedUser.userName==null}" ajax="false" action="#{usersData.deleteSelectedUser}" />
 											</h:form>
 											
 											
@@ -33,7 +33,7 @@
 			               <h:form id="myform">
 			               <p:dataTable var="user" value="#{usersData.users}" 
 			                			  selection="#{usersData.selectedUser}" 
-			                			  selectionMode="single"  rowKey="#{user.firstName}"  
+			                			  selectionMode="single"  rowKey="#{user.id}"  
 			                			  >
 			                
 			                	
@@ -41,7 +41,7 @@
  			                	           						
         
 							    <p:column headerText="First Name" sortBy="#{user.firstName}">
-							      		<h:outputText id="name_#{user.id}" value="#{user.firstName}" />							      
+							      		<h:outputText value="#{user.firstName}" />							      
 							    </p:column>
 							 
 							    <p:column headerText="Last Name" sortBy="#{user.lastName}">

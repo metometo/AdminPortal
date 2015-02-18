@@ -58,7 +58,10 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 		loadUsersFromDatabase();
 	}
 	
-	private void loadUsersFromDatabase()
+	/**
+	 * Reload the users from the database - update the table in /admin/index.xhtml
+	 */
+	public void loadUsersFromDatabase()
 	{
 		
 		SessionFactory sessionFactory = GetSessionFactory.getInstance();
@@ -96,7 +99,7 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 		//if(users == null)
 		//if(users.isEmpty())
 		//{
-			loadUsersFromDatabase();
+			//loadUsersFromDatabase();
 			//System.out.println("new load");
 		//}
 		
@@ -159,7 +162,11 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 					
 					 session.close();
 				
-					 System.out.println("deleted");
+					 
+					 // user deleted from the database
+					 // Update the table
+					 loadUsersFromDatabase();
+					 
 					 return null;
 					 
 					 
