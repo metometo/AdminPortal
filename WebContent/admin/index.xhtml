@@ -28,15 +28,6 @@
     			
 			    <p:tabView orientation="left" activeIndex="#{tableActiveTabManager.activeIndex}">
 			        
-			        <p:tab title="Users" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
-			             
-			            <ui:insert name="users_tab" >
-						 	<ui:include src="users_tab.xhtml" />
-						</ui:insert>			             
-			            
-			        </p:tab>
-			        
-			        
 			        <p:tab title="Computers">
 			            
 			             <ui:insert name="computers_tab" >
@@ -51,6 +42,15 @@
 						 </ui:insert>		
 			            
 			        </p:tab>
+			        
+			         <p:tab title="Users" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+			             
+			            <ui:insert name="users_tab" >
+						 	<ui:include src="users_tab.xhtml" />
+						</ui:insert>			             
+			            
+			        </p:tab>
+			        
 			    </p:tabView>
     			
     			<br /><br /><br />

@@ -9,9 +9,9 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class TableActiveTabManager implements Serializable
 {
-	public static final int USERS_TAB = 0;
-	public static final int COMPUTERS_TAB = 1;
-	public static final int APPLICATIONS_TAB = 2;
+	public static final int USERS_TAB = 2;
+	public static final int COMPUTERS_TAB = 0;
+	public static final int APPLICATIONS_TAB = 1;
 	
     private int activeIndex;
    

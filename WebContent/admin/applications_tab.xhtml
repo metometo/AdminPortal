@@ -12,7 +12,7 @@
 
 		<div>
             <div style="float:left">
-				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" >			                 
+				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">			                 
 		                    <h:form>
 			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddApplication').show();" />		                
 				                <p:commandButton value="Edit" disabled="#{applicationsData.selectedApplication.appName==null}" type="button"  onclick="PF('dlgEditApplication').show();" />
@@ -44,7 +44,7 @@
 			    </p:column>
 			 
 			    <p:column headerText="License required" sortBy="#{app.licenseRequired}">
-			        <p:selectBooleanCheckbox value="#{app.licenseRequired}" />				        
+			        <p:outputLabel value="#{app.licenseRequired==true?'yes':'no'}" />				        
 			    </p:column>
 			   	  
 			</p:dataTable>

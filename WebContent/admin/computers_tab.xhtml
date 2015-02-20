@@ -12,7 +12,7 @@
 
 		<div>
             <div style="float:left">
-				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" >			                 
+				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}" >			                 
 		                    <h:form>
 			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddComputer').show();" />		                
 				                <p:commandButton value="Edit" disabled="#{computersData.selectedComputer.name==null}" type="button"  onclick="PF('dlgEditComputer').show();" />
