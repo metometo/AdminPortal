@@ -27,7 +27,7 @@
 	    <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
 	            
             <h:form id="computerDataTable">
-            <p:dataTable var="computer" value="#{computersData.computers}" 
+            <p:dataTable id="computers_table" var="computer" value="#{computersData.computers}" 
              			  selection="#{computersData.selectedComputer}" 
              			  selectionMode="single"  rowKey="#{computer.id}"  
              			  >
@@ -55,9 +55,14 @@
 			        <h:outputText value="#{computer.password}" />
 			    </p:column>
 			    
-			  
-			    
 			</p:dataTable>
+				  
+		  	<div class="csv_template">
+				<h:commandLink value="Export to CSV" >
+			        <p:dataExporter type="csv" target="computers_table" fileName="computers" />
+			    </h:commandLink>
+		    </div>
+			
 	   		</h:form>
 	   		
 	   	</h:panelGrid>

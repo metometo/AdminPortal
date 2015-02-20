@@ -48,4 +48,6 @@ public class Role implements GrantedAuthority, Serializable
 	{
 		this.userRole = userRole;
 	}
+	
+	
 }

@@ -10,3 +10,7 @@ table { margin: 0 auto;  }
 /*login page */
 #j_username	{width:200px;}
 #j_password	{width:200px;}
+
+/* export to csv div and link */
+.csv_template {text-align:right; margin-top:10px; }
+.csv_template a {color:blue; }

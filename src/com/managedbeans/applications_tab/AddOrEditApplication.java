@@ -97,8 +97,7 @@ public class AddOrEditApplication implements Serializable
 			// invalidate session - clear all session saved variables
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 			
-			// invalidate session - clear all session saved variables
-			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+			tableActiveTabManager.setActiveIndex(TableActiveTabManager.APPLICATIONS_TAB);
 			
 			return "registered";
 		}
@@ -169,6 +168,7 @@ public class AddOrEditApplication implements Serializable
 			
 			// invalidate session - clear all session saved variables
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+			tableActiveTabManager.setActiveTab(TableActiveTabManager.APPLICATIONS_TAB);
 			
 			return null;//"user_updated";
 		}
@@ -179,4 +179,52 @@ public class AddOrEditApplication implements Serializable
 		
 		return "user_updated_error";
 	}
+	
+	
+	 public String deleteSelectedAppliction()
+	 {
+		// System.out.println(selectedApplicationId);
+		 for (int i = 0; i < applicationsData.getApplications().size(); i++)
+		 { 
+			 //System.out.println(selectedComputerId + " - "+computers.get(i).getId());
+			 if(applicationsData.getSelectedApplicationId() == applicationsData.getApplications().get(i).getId())
+			 {
+				 //users.remove(i);
+				 
+				 // remove from database and reload page
+				 try
+				 {
+					 SessionFactory sessionFactory = GetSessionFactory.getInstance();
+					 Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
+			
+					 session.beginTransaction();
+					 
+					 session.delete(applicationsData.getApplications().get(i));//OrUpdate(u);
+					
+					 session.getTransaction().commit();
+					
+					 session.close();
+				
+					 
+					 // user deleted from the database
+					 // Update the table
+					 applicationsData.loadApplicationsFromDatabase();
+					 
+					 return null;
+					 
+					 
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();			
+				}
+				
+				return "deleting_error";
+				 
+				// break;
+			 }
+		 }
+		 
+		 return "deleting_error";
+	 }
 }

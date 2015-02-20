@@ -31,7 +31,7 @@
 			            <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
 			              
 			               <h:form id="myform">
-			               <p:dataTable var="user" value="#{usersData.users}" 
+			               <p:dataTable id="users_table" var="user" value="#{usersData.users}" 
 			                			  selection="#{usersData.selectedUser}" 
 			                			  selectionMode="single"  rowKey="#{user.id}"  
 			                			  >
@@ -62,6 +62,13 @@
 							  
 							    
 							</p:dataTable>
+							
+							<div class="csv_template">
+								<h:commandLink value="Export to CSV" >
+							        <p:dataExporter type="csv" target="users_table" fileName="users" />
+							    </h:commandLink>
+						    </div>
+						    
 			                </h:form>
 			            </h:panelGrid>
 			            

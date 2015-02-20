@@ -16,7 +16,7 @@
 		                    <h:form>
 			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddApplication').show();" />		                
 				                <p:commandButton value="Edit" disabled="#{applicationsData.selectedApplication.appName==null}" type="button"  onclick="PF('dlgEditApplication').show();" />
-								<p:commandButton value="Delete" disabled="#{applicationsData.selectedApplication.appName==null}" ajax="false" onclick="return confirm('Are you sure you want to delete application \'#{applicationsData.selectedApplication.appName}\'?');" action="#{applicationsData.deleteSelectedAppliction}" />
+								<p:commandButton value="Delete" disabled="#{applicationsData.selectedApplication.appName==null}" ajax="false" onclick="return confirm('Are you sure you want to delete application \'#{applicationsData.selectedApplication.appName}\'?');" action="#{addOrEditApplication.deleteSelectedAppliction}" />
 							</h:form>
 									                
 	            </h:panelGrid>
@@ -26,8 +26,8 @@
                
 	    <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
 	            
-            <h:form id="applicationDataTable">
-            <p:dataTable var="app" value="#{applicationsData.applications}" 
+            <h:form >
+            <p:dataTable id="applications_table" var="app" value="#{applicationsData.applications}" 
              			  selection="#{applicationsData.selectedApplication}" 
              			  selectionMode="single"  rowKey="#{app.id}"  
              			  >
@@ -47,9 +47,17 @@
 			        <p:outputLabel value="#{app.licenseRequired==true?'yes':'no'}" />				        
 			    </p:column>
 			   	  
+			   	 
 			</p:dataTable>
+			
+			<div class="csv_template">
+				<h:commandLink value="Export to CSV" >
+			        <p:dataExporter type="csv" target="applications_table" fileName="application" />
+			    </h:commandLink>
+		    </div>
+			    
 	   		</h:form>
-	   		
+	   		 
 	   	</h:panelGrid>
 	           	
 	    <h:form id="addApplicationForm" prependId="false" binding="#{addApplicationForm}">

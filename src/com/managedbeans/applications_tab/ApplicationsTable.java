@@ -65,14 +65,6 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 	}
 
 
-
-	public List<Application> getApplication()
-	{
-		return applications;
-	}
-
-
-
 	public void setApplications(List<Application> applications)
 	{
 		this.applications = applications;
@@ -118,56 +110,9 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 		
 		//System.out.println("computers: "+computers);
 	}
-
-	
-	 public String deleteSelectedAppliction()
-	 {
-		 System.out.println(selectedApplicationId);
-		 for (int i = 0; i < applications.size(); i++)
-		 { 
-			 //System.out.println(selectedComputerId + " - "+computers.get(i).getId());
-			 if(selectedApplicationId == applications.get(i).getId())
-			 {
-				 //users.remove(i);
-				 
-				 // remove from database and reload page
-				 try
-				 {
-					 SessionFactory sessionFactory = GetSessionFactory.getInstance();
-					 Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
-			
-					 session.beginTransaction();
-					 
-					 session.delete(applications.get(i));//OrUpdate(u);
-					
-					 session.getTransaction().commit();
-					
-					 session.close();
-				
-					 
-					 // user deleted from the database
-					 // Update the table
-					 loadApplicationsFromDatabase();
-					 
-					 return null;
-					 
-					 
-				}
-				catch(Exception ex)
-				{
-					ex.printStackTrace();			
-				}
-				
-				return "deleting_error";
-				 
-				// break;
-			 }
-		 }
-		 
-		 return "deleting_error";
-	 }
 	 
-	    public void onRowSelect(SelectEvent event) {
+	public void onRowSelect(SelectEvent event) 
+	{
 //	        FacesMessage msg = new FacesMessage("Computer Selected", ((Computer) event.getObject()).getName());
 //	        FacesContext.getCurrentInstance().addMessage(null, msg);
 	        
