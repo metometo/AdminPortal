@@ -10,11 +10,116 @@
       
     <h:body>
 
+		<div>
             <div style="float:left">
-				
-				Under construction.
+				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" >			                 
+		                    <h:form>
+			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddApplication').show();" />		                
+				                <p:commandButton value="Edit" disabled="#{applicationsData.selectedApplication.appName==null}" type="button"  onclick="PF('dlgEditApplication').show();" />
+								<p:commandButton value="Delete" disabled="#{applicationsData.selectedApplication.appName==null}" ajax="false" onclick="return confirm('Are you sure you want to delete application \'#{applicationsData.selectedApplication.appName}\'?');" action="#{applicationsData.deleteSelectedAppliction}" />
+							</h:form>
+									                
+	            </h:panelGrid>
+           	</div>
+           	<div style="clear:both;"></div>
+    	</div>
+               
+	    <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
+	            
+            <h:form id="applicationDataTable">
+            <p:dataTable var="app" value="#{applicationsData.applications}" 
+             			  selection="#{applicationsData.selectedApplication}" 
+             			  selectionMode="single"  rowKey="#{app.id}"  
+             			  >
+             
+	              	
+	            <p:ajax event="rowSelect" listener="#{applicationsData.onRowSelect}" />
+	
+				<p:column headerText="Appication name" sortBy="#{app.appName}">
+		      		<h:outputText value="#{app.appName}" />							      
+				</p:column>	                	           						
+		   
+			    <p:column headerText="Vendor name" sortBy="#{app.vendorName}">
+			      		<h:outputText value="#{app.vendorName}" />							      
+			    </p:column>
+			 
+			    <p:column headerText="License required" sortBy="#{app.licenseRequired}">
+			        <p:selectBooleanCheckbox value="#{app.licenseRequired}" />				        
+			    </p:column>
+			   	  
+			</p:dataTable>
+	   		</h:form>
+	   		
+	   	</h:panelGrid>
+	           	
+	    <h:form id="addApplicationForm" prependId="false" binding="#{addApplicationForm}">
+		<p:dialog id="dlgAddApplication" header="Add New Application" widgetVar="dlgAddApplication" modal="true" height="200">												
 			
-			</div>
-			           
+			<h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+				   
+			<p:outputLabel for="applicationNameAddApplication" value="Application Name:" />  
+			<p:inputText id="applicationNameAddApplication" required="true" value="#{addOrEditApplication.application.appName}"/>  
+			<p:message for="applicationNameAddApplication" display="text" style="color:red" />
+
+				                   
+		    <p:outputLabel for="vandorNameAddApplication" value="Vendor Name:" />  
+		    <p:inputText id="vandorNameAddApplication" required="true" value="#{addOrEditApplication.application.vendorName}" />  
+		    <p:message for="vandorNameAddApplication" display="text" style="color:red" />
+		                   
+				    
+		    <p:outputLabel for="licenseRequiredAddApplication" value="License Required:" />  
+		     <p:selectBooleanCheckbox id="licenseRequiredAddApplication"  value="#{addOrEditApplication.application.licenseRequired}" />  
+		    <p:message for="licenseRequiredAddApplication" display="text" style="color:red" />
+		    
+		    
+		    <p:outputLabel value="" />
+		   	<p:commandButton type="submit" ajax="true" id="addApplication" value="Add application" action="#{addOrEditApplication.registerNewApplication}" 
+		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
+		   		/>
+		    <p:outputLabel value="&nbsp;" />
+			
+	    </h:panelGrid>						
+	</p:dialog>				 
+	</h:form>
+           
+           
+           
+           
+          
+	<h:form id="editApplicationForm" prependId="false" binding="#{editApplicationForm}">
+	<p:dialog id="dlgEditApplication" header="Edit Application" widgetVar="dlgEditApplication" modal="true" height="200">												
+	
+	
+	   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+		   
+		   	
+		   
+		    <p:outputLabel for="nameEditApplication" value="Application Name:" />  
+		    <p:outputLabel id="nameEditApplication" value="#{applicationsData.selectedApplication.appName}" />  
+		    <p:message for="nameEditApplication" display="text" style="color:red" />
+		    
+		    
+		    <p:outputLabel for="vandorNameEditApplication" value="Vendor Name:" />  
+		    <p:inputText id="vandorNameEditApplication" required="true" value="#{addOrEditApplication.application.vendorName}" />  
+		    <p:message for="vandorNameEditApplication" display="text" style="color:red" />
+		                   
+				    
+		    <p:outputLabel for="licenseRequiredEditApplication" value="License Required:" />  
+		    <p:selectBooleanCheckbox id="licenseRequiredEditApplication"  value="#{addOrEditApplication.application.licenseRequired}" />		
+		    <p:message for="licenseRequiredEditApplication" display="text" style="color:red" />
+		    
+		    
+		    <p:outputLabel value="" />
+		   	<p:commandButton type="submit" ajax="true" id="editApplication" value="Edit application" action="#{addOrEditApplication.editApplication}" 
+		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
+		   		/>
+		    <p:outputLabel value="&nbsp;" />
+			
+	    </h:panelGrid>
+	    
+	    
+	 </p:dialog>	 
+	 </h:form>
+
 </h:body>
 </html>

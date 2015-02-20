@@ -110,6 +110,8 @@ public class RegisterComputer implements Serializable
 
 	public String registerNewComputer()
 	{
+		tableActiveTabManager.setActiveTab(TableActiveTabManager.COMPUTERS_TAB);
+		
 		try
 		{
 			SessionFactory sessionFactory = GetSessionFactory.getInstance();
@@ -144,7 +146,6 @@ public class RegisterComputer implements Serializable
 			// invalidate session - clear all session saved variables
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 			
-			tableActiveTabManager.setActiveTab(TableActiveTabManager.COMPUTERS_TAB);
 			
 			return "registered";
 		}

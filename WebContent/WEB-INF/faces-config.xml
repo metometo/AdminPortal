@@ -15,7 +15,18 @@
 		<message-bundle>
 			com.bundles.message
 		</message-bundle>
+		
+		<locale-config>
+	      <default-locale>en</default-locale>
+	   </locale-config>
+	   <resource-bundle>
+	      <base-name>com.bundles.locale_en</base-name>
+	      <var>msg</var>
+	   </resource-bundle>
 	</application>
+	
+	
+	
 	
 	
 	<!-- ************************** -->

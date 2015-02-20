@@ -140,6 +140,9 @@ public class EditComputer implements Serializable
 
 	public String editComputer()
 	{
+		tableActiveTabManager.setActiveTab(TableActiveTabManager.COMPUTERS_TAB);
+		
+		
 		try
 		{
 			SessionFactory sessionFactory = GetSessionFactory.getInstance();
@@ -188,8 +191,7 @@ public class EditComputer implements Serializable
 			// Update the table
 			computersData.loadComputersFromDatabase();
 			
-			tableActiveTabManager.setActiveTab(TableActiveTabManager.COMPUTERS_TAB);
-			
+		
 			return "user_updated";
 		}
 		catch(Exception ex)

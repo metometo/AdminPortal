@@ -33,7 +33,7 @@
 				    <!-- Id's must not be changed to support spring security check -->
 				    <h:panelGrid columns="3" cellpadding="5" cellspacing="1">
 					   
-					    <p:outputLabel for="j_username" value="Username:" style="width:400px;" />  
+					    <p:outputLabel for="j_username" value="#{msg['username']}" style="width:400px;" />  
 					    <p:inputText id="j_username" required="true" label="username" value="#{loginController.user}" />  
 					    
 					    <h:panelGroup columns="2"> <!--  Prints first textfield messsage and "wrong user name or password" for the whole form -->
@@ -41,7 +41,7 @@
 						 	<p:message for="j_username" display="text" style="color:red" />
 						</h:panelGroup>
 					                   
-					    <p:outputLabel for="j_password" value="Password:" />  
+					    <p:outputLabel for="j_password" value="#{msg['password']}" />  
 					    <p:password id="j_password" label="password" required="true" value="#{loginController.password}" />  
 					    <p:message for="j_password" display="text" style="color:red"/>
 					                   
@@ -54,11 +54,11 @@
 					    <h:panelGroup columns="2">
 					    	<div style="float:left; text-align:left; padding:5px 0px 0px 0px;">
 								<h:outputLink value="registration.jsf">
-									<p:outputLabel value="Registration" />
+									<p:outputLabel value="#{msg['registration']}" />
 								</h:outputLink>
 							</div>
 							<div style="text-align:right;">
-								<p:commandButton type="submit"  id="login" ajax="false" value="Login" action="#{loginController.doLogin}" />
+								<p:commandButton type="submit"  id="login" ajax="false" value="#{msg['login']}" action="#{loginController.doLogin}" />
 							</div>
 						</h:panelGroup>
 					    <h:outputText value="&nbsp;" />

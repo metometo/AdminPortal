@@ -1,19 +1,22 @@
 package com.entities_and_database;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Application
+public class Application implements Serializable
 {
-	@Id
+		@Id
 	@GeneratedValue
 	private int id;
 	
 	private String appName;
 	private String vendorName;
-	private String licanseRequired;
+	private boolean licenseRequired;
+	
 	public int getId()
 	{
 		return id;
@@ -38,13 +41,14 @@ public class Application
 	{
 		this.vendorName = vendorName;
 	}
-	public String getLicanseRequired()
+	public boolean getLicenseRequired()
 	{
-		return licanseRequired;
+		return licenseRequired;
 	}
-	public void setLicanseRequired(String licanseRequired)
+	
+	public void setLicenseRequired(boolean licenseRequired)
 	{
-		this.licanseRequired = licanseRequired;
+		this.licenseRequired = licenseRequired;
 	}
 	
 }
