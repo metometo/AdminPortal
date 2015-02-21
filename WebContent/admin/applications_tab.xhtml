@@ -47,7 +47,14 @@
 			        <p:outputLabel value="#{app.licenseRequired==true?'yes':'no'}" />				        
 			    </p:column>
 			   	  
-			   	 
+			   	<p:column headerText="Instaled on" >
+			   		<h:selectManyListbox id="computersListEditApplication"  size="4" style="width:100%">  
+					  <f:selectItems var="computer" value="#{app.computers}" 
+						itemValue="#{computer.id}" itemLabel="#{computer.name}"					 
+					  />
+					</h:selectManyListbox>			       
+			    </p:column>
+			    
 			</p:dataTable>
 			
 			<div class="csv_template">
@@ -61,7 +68,7 @@
 	   	</h:panelGrid>
 	           	
 	    <h:form id="addApplicationForm" prependId="false" binding="#{addApplicationForm}">
-		<p:dialog id="dlgAddApplication" header="Add New Application" widgetVar="dlgAddApplication" modal="true" height="200">												
+		<p:dialog id="dlgAddApplication" header="Add New Application" widgetVar="dlgAddApplication" modal="true" height="270">												
 			
 			<h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
 				   
@@ -80,6 +87,18 @@
 		    <p:message for="licenseRequiredAddApplication" display="text" style="color:red" />
 		    
 		    
+		    
+		    <p:outputLabel for="computersListAddApplication" value="Installed on" />  
+		    <h:selectManyListbox id="computersListAddApplication" value="#{applicationsData.computersInstalledOn}"  size="4">  
+				  <f:selectItems var="computer" value="#{computersData.computers}" 
+					itemValue="#{computer.id}" itemLabel="#{computer.name}" 
+				  />				  				  
+			</h:selectManyListbox>  
+			<p:message for="computersListAddApplication" display="text" style="color:red" />
+			
+			
+		    
+		    
 		    <p:outputLabel value="" />
 		   	<p:commandButton type="submit" ajax="true" id="addApplication" value="Add application" action="#{addOrEditApplication.registerNewApplication}" 
 		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
@@ -95,7 +114,7 @@
            
           
 	<h:form id="editApplicationForm" prependId="false" binding="#{editApplicationForm}">
-	<p:dialog id="dlgEditApplication" header="Edit Application" widgetVar="dlgEditApplication" modal="true" height="200">												
+	<p:dialog id="dlgEditApplication" header="Edit Application" widgetVar="dlgEditApplication" modal="true" height="300">												
 	
 	
 	   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
@@ -115,6 +134,15 @@
 		    <p:outputLabel for="licenseRequiredEditApplication" value="License Required:" />  
 		    <p:selectBooleanCheckbox id="licenseRequiredEditApplication"  value="#{addOrEditApplication.application.licenseRequired}" />		
 		    <p:message for="licenseRequiredEditApplication" display="text" style="color:red" />
+		    
+		    
+		    <p:outputLabel for="computersListEditApplication" value="Installed on" />  
+		    <h:selectManyListbox id="computersListEditApplication" value="#{applicationsData.computersInstalledOn}"  size="4">  
+				  <f:selectItems var="computer" value="#{computersData.computers}" 
+					itemValue="#{computer.id}" itemLabel="#{computer.name}"					 
+				  />
+			</h:selectManyListbox>  
+			<p:message for="computersListEditApplication" display="text" style="color:red" />
 		    
 		    
 		    <p:outputLabel value="" />

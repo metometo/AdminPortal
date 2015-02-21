@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,6 +34,7 @@ public class ComputersTable	implements Serializable//, SelectableDataModel<User>
 	@ManagedProperty(value = "#{tableActiveTabManager}")
 	TableActiveTabManager tableActiveTabManager;
 
+	
 	public TableActiveTabManager getTableActiveTabManager()
 	{
 		return tableActiveTabManager;
@@ -91,7 +93,6 @@ public class ComputersTable	implements Serializable//, SelectableDataModel<User>
 	 */
 	public void loadComputersFromDatabase()
 	{
-		
 		SessionFactory sessionFactory = GetSessionFactory.getInstance();
 		Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
 
@@ -102,6 +103,13 @@ public class ComputersTable	implements Serializable//, SelectableDataModel<User>
 		
 		
 		computers = query.list();
+		
+//		//Hibernate.initialize(computers);
+//		
+//		for (int i = 0; i < computers.size(); i++)
+//		{
+//			Hibernate.initialize(computers.get(i).getApplications());
+//		}
 		
 		session.getTransaction().commit();
 		

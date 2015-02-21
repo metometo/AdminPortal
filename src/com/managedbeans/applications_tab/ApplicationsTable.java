@@ -3,21 +3,24 @@ package com.managedbeans.applications_tab;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.primefaces.event.SelectEvent;
 
 import com.entities_and_database.Application;
-
+import com.entities_and_database.Computer;
 import com.entities_and_database.GetSessionFactory;
 import com.managedbeans.TableActiveTabManager;
 
@@ -27,12 +30,37 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 {
 	//private List<User> selectedUsers;
 	
-	private Application selectedApplication = new Application();
+	private List<String> computersInstalledOn = new ArrayList<String>();
+
+	private List<Computer> allComputers = new ArrayList<Computer>();	// list of all registered computers in the database	
+	private Application selectedApplication;// = new Application();
 	private int selectedApplicationId;
 	private List<Application> applications = new ArrayList<Application>();
 	
 	@ManagedProperty(value = "#{tableActiveTabManager}")
 	TableActiveTabManager tableActiveTabManager;
+
+	
+
+	public List<String> getComputersInstalledOn()
+	{
+		return computersInstalledOn;
+	}
+
+	public void setComputersInstalledOn(List<String> computersInstalledOn)
+	{
+		this.computersInstalledOn = computersInstalledOn;
+	}
+
+	public List<Computer> getAllComputers()
+	{
+		return allComputers;
+	}
+
+	public void setAllComputers(List<Computer> allComputers)
+	{
+		this.allComputers = allComputers;
+	}
 
 	public TableActiveTabManager getTableActiveTabManager()
 	{
@@ -47,9 +75,15 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 	public ApplicationsTable()
 	{
 		// load users data from the databse
-		loadApplicationsFromDatabase();
+		loadApplicationsFromDatabase();		
 	}
-	
+
+	@PostConstruct
+    public void init()
+    {
+         // load users data from the databse
+		loadApplicationsFromDatabase();
+    }	
 	
 	
 	public int getSelectedApplicationId()
@@ -104,8 +138,20 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 		
 		applications = query.list();
 		
-		session.getTransaction().commit();
+		Hibernate.initialize(applications);
 		
+		// force computers to be loaded from the database (now LAZY loading is ussed, so we need to call the List to initialize it)
+		for (int i = 0; i < applications.size(); i++)
+		{
+			//ArrayList<Computer> computerArray = new ArrayList<Computer>();
+			
+			Application a = applications.get(i);
+			
+			Hibernate.initialize(a.getComputers());	
+		}
+	
+		session.getTransaction().commit();
+			
 		session.close();
 		
 		//System.out.println("computers: "+computers);

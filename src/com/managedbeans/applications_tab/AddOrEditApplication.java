@@ -1,16 +1,20 @@
 package com.managedbeans.applications_tab;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.entities_and_database.Application;
+import com.entities_and_database.Computer;
 import com.entities_and_database.GetSessionFactory;
 import com.managedbeans.TableActiveTabManager;
 
@@ -79,34 +83,70 @@ public class AddOrEditApplication implements Serializable
 			SessionFactory sessionFactory = GetSessionFactory.getInstance();
 			Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
 	
-			session.beginTransaction();
+			
 			//com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
+			session.beginTransaction();	
+			
+			// get all computers, to link them with the application
+			for (int i = 0; i < applicationsData.getComputersInstalledOn().size(); i++)
+			{
 				
+				//session.beginTransaction();
+		
+				SQLQuery query = session.createSQLQuery("select * from computer s  WHERE id = :computer_id");
+				query.addEntity(com.entities_and_database.Computer.class);
+				query.setParameter("computer_id", applicationsData.getComputersInstalledOn().get(i));
+				
+				
+				
+				List<Computer> c = query.list();
+				
+				//session.getTransaction().commit();
+				
+				if(c.size()==1)
+				{
+					application.getComputers().add(c.get(0));// add computer to the application
+				}
+				else if(c.size()>1)
+				{
+					//new AssertionError("It is impossible two computers to have same ID");
+				}
+			}
+			
+			
+			//session.beginTransaction();
 			session.save(application);//OrUpdate(u);
 			
-			session.getTransaction().commit();
+			if (!session.getTransaction().wasCommitted())
+					session.getTransaction().commit();
 			
 			session.close();
 			
 			// user registered
 			// Update the /admin/index.xhtml table 
 			// TODO: do not refresh always, only when the page is /admin/index.xhtml (when the page is registration.xhtml - do not refres)
-			applicationsData.loadApplicationsFromDatabase();
-			
 			
 			// invalidate session - clear all session saved variables
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 			
+			applicationsData.loadApplicationsFromDatabase();
+			
 			tableActiveTabManager.setActiveIndex(TableActiveTabManager.APPLICATIONS_TAB);
+			
+			System.out.println(applicationsData.getComputersInstalledOn());
 			
 			return "registered";
 		}
 		catch(Exception ex)
 		{
 			// check if the user exyst - duplicated enrty is for the column username
+			if(ex.getCause()!=null)
 			if(ex.getCause().toString().contains("Duplicate entry"))
 				return "user_exist";
 					
+			
+			System.out.println(ex.getCause()+"==================");
+			ex.printStackTrace();
 		}
 		
 		return "error";
@@ -134,31 +174,48 @@ public class AddOrEditApplication implements Serializable
 			
 			session.getTransaction().commit();
 			
+			if(a!=null)
+			{
+				session.beginTransaction();
+				
+				if(a.getComputers()!=null)
+					a.getComputers().clear();	// remove old computers
+				
+				// get all computers, to link them with the application
+				for (int i = 0; i < applicationsData.getComputersInstalledOn().size(); i++)
+				{
+					
+					//session.beginTransaction();
 			
-			session.beginTransaction();
-			
-			
-			// name can not be changed
-			a.setLicenseRequired(application.getLicenseRequired());
-			a.setVendorName(application.getVendorName());
-			
-			
-			
-			//u.setUserName(newUsername);	// user name do not change
-			//c.setPassword(newPassword);
-			//u.setRole(role);
-			
-//			ArrayList<Role> roles = new ArrayList<Role>();
-//			Role r = new Role();
-			
-			
-//			
-//			roles.add(r);
-//			u.setRoles(roles);			
-			
-			session.update(a);//OrUpdate(u);
-
-			session.getTransaction().commit();
+					SQLQuery query = session.createSQLQuery("select * from computer s  WHERE id = :computer_id");
+					query.addEntity(com.entities_and_database.Computer.class);
+					query.setParameter("computer_id", applicationsData.getComputersInstalledOn().get(i));
+					
+					
+					
+					List<Computer> c = query.list();	// indeed only one computer is returned
+					
+					if(c.size()==1)
+					{
+						a.getComputers().add(c.get(0));// add computer to the application
+					}
+					else if(c.size()>1)
+					{
+						//new AssertionError("It is impossible two computers to have same ID");
+					}
+				}
+				
+				// name can not be changed, add other data
+				a.setLicenseRequired(application.getLicenseRequired());
+				a.setVendorName(application.getVendorName());
+				
+				
+				
+				session.update(a);//OrUpdate(u);
+	
+				session.getTransaction().commit();
+				
+			}
 			
 			session.close();
 			
