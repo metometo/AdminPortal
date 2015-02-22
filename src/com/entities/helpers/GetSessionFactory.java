@@ -1,4 +1,4 @@
-package com.entities_and_database;
+package com.entities.helpers;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

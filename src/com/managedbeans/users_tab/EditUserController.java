@@ -11,10 +11,11 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.entities_and_database.GetSessionFactory;
-import com.entities_and_database.HibernateCommonMethods;
-import com.entities_and_database.Role;
-import com.entities_and_database.User;
+import com.entities.User;
+import com.entities.helpers.GetSessionFactory;
+import com.entities.helpers.HibernateCommonMethods;
+import com.entities.helpers.Role;
+import com.entities.helpers.RoleType;
 import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name = "updateUserController")
@@ -165,7 +166,7 @@ public class EditUserController implements Serializable
 			
 			// crate User object and sava it to the database
 						
-			u.setFirstName(newFirstName);
+			u.setName(newFirstName);
 			u.setLastName(newLastName);
 			//u.setUserName(newUsername);	// user name do not change
 			u.setPassword(newPassword);
@@ -177,11 +178,11 @@ public class EditUserController implements Serializable
 			// TODO: REFACTOR TO USE THE CREATED ROLES INSTEAD OF CREATING NEW WITH THE SAME NAME
 			if(newAdminRole)
 			{
-				u.setRole("ROLE_ADMIN");	
+				u.setRole(RoleType.ROLE_ADMIN);	
 			}
 			else
 			{
-				u.setRole("ROLE_USER");	
+				u.setRole(RoleType.ROLE_USER);	
 			}
 //			
 //			roles.add(r);

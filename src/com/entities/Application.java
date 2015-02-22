@@ -1,4 +1,4 @@
-package com.entities_and_database;
+package com.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,22 +9,24 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.entities.helpers.BaseEntity;
 
 @Entity
-public class Application implements Serializable
+@Table(name="application")
+public class Application extends BaseEntity implements Serializable
 {
-		@Id
-	@GeneratedValue
-	private int id;
-	
-	private String appName;
 	private String vendorName;
 	private boolean licenseRequired;
 	
-	@OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER) //mappedBy="applications",
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //mappedBy="applications",
+	@JoinColumn(unique=false)
 	Collection<Computer> computers = new ArrayList<Computer>();
 	
 	
@@ -37,22 +39,8 @@ public class Application implements Serializable
 		this.computers = computers;
 	}
 	
-	public int getId()
-	{
-		return id;
-	}
-	public void setId(int id)
-	{
-		this.id = id;
-	}
-	public String getAppName()
-	{
-		return appName;
-	}
-	public void setAppName(String appName)
-	{
-		this.appName = appName;
-	}
+	
+	
 	public String getVendorName()
 	{
 		return vendorName;

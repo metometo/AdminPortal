@@ -26,10 +26,10 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.SelectableDataModel;
 
-import com.entities_and_database.GetSessionFactory;
-import com.entities_and_database.HibernateCommonMethods;
-import com.entities_and_database.Role;
-import com.entities_and_database.User;
+import com.entities.User;
+import com.entities.helpers.GetSessionFactory;
+import com.entities.helpers.HibernateCommonMethods;
+import com.entities.helpers.Role;
 import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name="usersData")
@@ -41,7 +41,7 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 	private User selectedUser = new User();
 	private int selectedUserId;
 	private List<User> users = new ArrayList<User>();
-	private ArrayList<ArrayList<String>> userRoles = new ArrayList<ArrayList<String>>();
+	//private ArrayList<ArrayList<String>> userRoles = new ArrayList<ArrayList<String>>();
 	
 	@ManagedProperty(value = "#{tableActiveTabManager}")
 	TableActiveTabManager tableActiveTabManager;
@@ -84,7 +84,7 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 		session.beginTransaction();
 
 		SQLQuery query = session.createSQLQuery("select * from user s");
-		query.addEntity(com.entities_and_database.User.class);
+		query.addEntity(com.entities.User.class);
 		
 		
 		users = query.list();
@@ -207,9 +207,9 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 //	    }
 	     
 	    public void onRowSelect(SelectEvent event) {
-	        FacesMessage msg = new FacesMessage("User Selected", ((User) event.getObject()).getUserName());
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-	        
+//	        FacesMessage msg = new FacesMessage("User Selected", ((User) event.getObject()).getUserName());
+//	        FacesContext.getCurrentInstance().addMessage(null, msg);
+//	        
 	        User selUser = ((User) event.getObject());
 	        
 	    	
@@ -221,8 +221,8 @@ public class UsersTable	implements Serializable//, SelectableDataModel<User>
 				if(u.getId()==selUser.getId())
 				{
 					selectedUser = u;
-					System.out.println("User Selected: " + selectedUser.getUserName() + ", id: " + selectedUserId);
-					tableActiveTabManager.setActiveTab(TableActiveTabManager.USERS_TAB);
+					//System.out.println("User Selected: " + selectedUser.getName() + ", id: " + selectedUserId);
+					//tableActiveTabManager.setActiveTab(TableActiveTabManager.USERS_TAB);
 					break;
 				}
 			}

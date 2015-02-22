@@ -16,7 +16,7 @@
 						                    <h:form>
 							                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAdd').show();" />		                
 								                <p:commandButton value="Edit" disabled="#{usersData.selectedUser.userName==null}" type="button"  onclick="PF('dlgEdit').show();" />
-												<p:commandButton value="Delete" disabled="#{usersData.selectedUser.userName==null}" ajax="false" onclick="return confirm('Are you sure you want to delete user \'#{usersData.selectedUser.firstName} #{usersData.selectedUser.lastName}\'?');" action="#{usersData.deleteSelectedUser}" />
+												<p:commandButton value="Delete" disabled="#{usersData.selectedUser.userName==null}" ajax="false" onclick="return confirm('Are you sure you want to delete user \'#{usersData.selectedUser.name} #{usersData.selectedUser.lastName}\'?');" action="#{usersData.deleteSelectedUser}" />
 											</h:form>
 											
 											
@@ -40,8 +40,8 @@
 			                	<p:ajax event="rowSelect" listener="#{usersData.onRowSelect}" />
  			                	           						
         
-							    <p:column headerText="First Name" sortBy="#{user.firstName}">
-							      		<h:outputText value="#{user.firstName}" />							      
+							    <p:column headerText="First Name" sortBy="#{user.name}">
+							      		<h:outputText value="#{user.name}" />							      
 							    </p:column>
 							 
 							    <p:column headerText="Last Name" sortBy="#{user.lastName}">
@@ -121,12 +121,12 @@
 			           <h:form id="editForm" prependId="false" binding="#{editForm}">
 			             	<p:dialog id="dlgEdit" header="Edit User" widgetVar="dlgEdit" modal="true" height="300">												
 							
-							<h:panelGroup rendered="#{usersData.selectedUser.userName!=null}">
+							<h:panelGroup rendered="#{usersData.selectedUser.name!=null}">
 							   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
 								   
 								   
 								    <p:outputLabel for="username" value="Username:" />  
-								    <p:outputLabel id="username" value="#{usersData.selectedUser.userName}" />  
+								    <p:outputLabel id="username" value="#{usersData.selectedUser.name}" />  
 								    <p:message for="username" display="text" style="color:red" />
 								    
 								    
@@ -162,7 +162,7 @@
 							    
 							     </h:panelGroup>
 							     
-							     <h:panelGroup rendered="#{usersData.selectedUser.userName==null}">
+							     <h:panelGroup rendered="#{usersData.selectedUser.name==null}">
 							     	<br /><br />
 							     	<p:outputLabel value="Plese, first select user from the table and then click 'Edit'."></p:outputLabel>
 							     </h:panelGroup>

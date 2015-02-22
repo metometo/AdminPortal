@@ -13,10 +13,11 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.entities_and_database.GetSessionFactory;
-import com.entities_and_database.HibernateCommonMethods;
-import com.entities_and_database.Role;
-import com.entities_and_database.User;
+import com.entities.User;
+import com.entities.helpers.GetSessionFactory;
+import com.entities.helpers.HibernateCommonMethods;
+import com.entities.helpers.Role;
+import com.entities.helpers.RoleType;
 import com.managedbeans.users_tab.UsersTable;
 
 @ManagedBean(name = "registerController")
@@ -114,7 +115,7 @@ public class RegisterController implements Serializable
 				
 			// crate User object and sava it to the database
 			User u = new User();
-			u.setFirstName(firstName);
+			u.setName(firstName);
 			u.setLastName(lastName);
 			u.setUserName(username);
 			u.setPassword(password);
@@ -126,12 +127,12 @@ public class RegisterController implements Serializable
 			if(adminRole)
 			{
 				//r.setUserRole("ROLE_ADMIN");	
-				u.setRole("ROLE_ADMIN");
+				u.setRole(RoleType.ROLE_ADMIN);
 			}
 			else
 			{
 				//r.setUserRole("ROLE_USER");
-				u.setRole("ROLE_USER");
+				u.setRole(RoleType.ROLE_USER);
 			}
 			
 			//roles.add(r);

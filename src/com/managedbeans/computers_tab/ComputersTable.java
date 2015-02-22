@@ -17,8 +17,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.primefaces.event.SelectEvent;
 
-import com.entities_and_database.Computer;
-import com.entities_and_database.GetSessionFactory;
+import com.entities.Computer;
+import com.entities.helpers.GetSessionFactory;
 import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name="computersData")
@@ -99,7 +99,7 @@ public class ComputersTable	implements Serializable//, SelectableDataModel<User>
 		session.beginTransaction();
 
 		SQLQuery query = session.createSQLQuery("select * from computer s");
-		query.addEntity(com.entities_and_database.Computer.class);
+		query.addEntity(com.entities.Computer.class);
 		
 		
 		computers = query.list();

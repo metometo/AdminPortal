@@ -9,8 +9,8 @@ import javax.faces.bean.RequestScoped;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.entities_and_database.Computer;
-import com.entities_and_database.GetSessionFactory;
+import com.entities.Computer;
+import com.entities.helpers.GetSessionFactory;
 import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name = "editComputer")

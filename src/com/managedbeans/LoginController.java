@@ -26,8 +26,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.WebAttributes;
 
-import com.entities_and_database.GetSessionFactory;
-import com.entities_and_database.HibernateCommonMethods;
+import com.entities.helpers.GetSessionFactory;
+import com.entities.helpers.HibernateCommonMethods;
+import com.entities.helpers.RoleType;
 import com.àuthentication.UsersAuthentication;
 
 @ManagedBean(name = "loginController")
@@ -37,7 +38,7 @@ public class LoginController implements PhaseListener
 	private String user;
 	private String password;
 	//private String role;
-	private ArrayList<String> roles=new ArrayList<String>();
+	private ArrayList<RoleType> roles=new ArrayList<RoleType>();
 
 	//protected final Log logger = LogFactory.getLog(getClass());
 
@@ -134,7 +135,7 @@ public class LoginController implements PhaseListener
 		this.password = password;
 	}
 
-	public ArrayList<String> getRoles()
+	public ArrayList<RoleType> getRoles()
 	{
 		return roles;
 	}
@@ -161,7 +162,7 @@ public class LoginController implements PhaseListener
 		Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
 
 		session.beginTransaction();
-		com.entities_and_database.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
+		com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
 																			// session.load(com.entities.User.class,
 																			// 1);
 		session.getTransaction().commit();

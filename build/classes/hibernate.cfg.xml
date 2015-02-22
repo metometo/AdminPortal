@@ -21,9 +21,10 @@
     <property name="connection.pool_size">1</property>
     <property name="current_session_context_class">thread</property>
  
-     <mapping class="com.entities_and_database.Computer" />
-     <mapping class="com.entities_and_database.Application" />
-     <mapping class="com.entities_and_database.User" />
+     <mapping class="com.entities.Computer" />
+     <mapping class="com.entities.Application" />
+     <mapping class="com.entities.User" />
+     
  
 </session-factory>
 </hibernate-configuration>

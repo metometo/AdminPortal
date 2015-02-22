@@ -9,13 +9,14 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.entities_and_database.Application;
-import com.entities_and_database.Computer;
-import com.entities_and_database.GetSessionFactory;
+import com.entities.Application;
+import com.entities.Computer;
+import com.entities.helpers.GetSessionFactory;
 import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name = "addOrEditApplication")
@@ -78,14 +79,16 @@ public class AddOrEditApplication implements Serializable
 	{
 		tableActiveTabManager.setActiveTab(TableActiveTabManager.APPLICATIONS_TAB);
 		
+		
+		SessionFactory sessionFactory = GetSessionFactory.getInstance();
+		Session session = sessionFactory.getCurrentSession();//openSession();
+
 		try
 		{
-			SessionFactory sessionFactory = GetSessionFactory.getInstance();
-			Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
-	
-			
 			//com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
 			session.beginTransaction();	
+			
+			application.getComputers().clear();
 			
 			// get all computers, to link them with the application
 			for (int i = 0; i < applicationsData.getComputersInstalledOn().size(); i++)
@@ -94,7 +97,7 @@ public class AddOrEditApplication implements Serializable
 				//session.beginTransaction();
 		
 				SQLQuery query = session.createSQLQuery("select * from computer s  WHERE id = :computer_id");
-				query.addEntity(com.entities_and_database.Computer.class);
+				query.addEntity(com.entities.Computer.class);
 				query.setParameter("computer_id", applicationsData.getComputersInstalledOn().get(i));
 				
 				
@@ -102,6 +105,10 @@ public class AddOrEditApplication implements Serializable
 				List<Computer> c = query.list();
 				
 				//session.getTransaction().commit();
+				
+//				session.close();
+//				session = sessionFactory.getCurrentSession();
+//				session.beginTransaction();	
 				
 				if(c.size()==1)
 				{
@@ -117,10 +124,11 @@ public class AddOrEditApplication implements Serializable
 			//session.beginTransaction();
 			session.save(application);//OrUpdate(u);
 			
-			if (!session.getTransaction().wasCommitted())
+			//if (!session.getTransaction().wasCommitted())
 					session.getTransaction().commit();
 			
-			session.close();
+			if(session.isOpen())
+				session.close();
 			
 			// user registered
 			// Update the /admin/index.xhtml table 
@@ -133,7 +141,7 @@ public class AddOrEditApplication implements Serializable
 			
 			tableActiveTabManager.setActiveIndex(TableActiveTabManager.APPLICATIONS_TAB);
 			
-			System.out.println(applicationsData.getComputersInstalledOn());
+			//System.out.println(applicationsData.getComputersInstalledOn());
 			
 			return "registered";
 		}
@@ -147,6 +155,10 @@ public class AddOrEditApplication implements Serializable
 			
 			System.out.println(ex.getCause()+"==================");
 			ex.printStackTrace();
+			
+			if(session.isOpen())
+				session.close();
+			
 		}
 		
 		return "error";
@@ -158,11 +170,12 @@ public class AddOrEditApplication implements Serializable
 	{
 		tableActiveTabManager.setActiveTab(TableActiveTabManager.APPLICATIONS_TAB);
 		
+		
+		SessionFactory sessionFactory = GetSessionFactory.getInstance();
+		Session session = sessionFactory.getCurrentSession();//openSession();
+		
 		try
 		{
-			SessionFactory sessionFactory = GetSessionFactory.getInstance();
-			Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
-	
 			session.beginTransaction();
 			//com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
 			
@@ -172,10 +185,15 @@ public class AddOrEditApplication implements Serializable
 			if(a==null)
 				return "user_notselected";
 			
+			if(a.getComputers()!=null)
+				Hibernate.initialize(a.getComputers());
+			
 			session.getTransaction().commit();
 			
 			if(a!=null)
 			{
+				
+				session = sessionFactory.getCurrentSession();//openSession();
 				session.beginTransaction();
 				
 				if(a.getComputers()!=null)
@@ -188,7 +206,7 @@ public class AddOrEditApplication implements Serializable
 					//session.beginTransaction();
 			
 					SQLQuery query = session.createSQLQuery("select * from computer s  WHERE id = :computer_id");
-					query.addEntity(com.entities_and_database.Computer.class);
+					query.addEntity(com.entities.Computer.class);
 					query.setParameter("computer_id", applicationsData.getComputersInstalledOn().get(i));
 					
 					
@@ -207,7 +225,7 @@ public class AddOrEditApplication implements Serializable
 				
 				// name can not be changed, add other data
 				a.setLicenseRequired(application.getLicenseRequired());
-				a.setVendorName(application.getVendorName());
+				a.setVendorName(application.getVendorName());	// vendor name
 				
 				
 				
@@ -217,7 +235,8 @@ public class AddOrEditApplication implements Serializable
 				
 			}
 			
-			session.close();
+			if(session.isOpen())
+				session.close();
 			
 			// User updated
 			// Update the table
@@ -231,7 +250,10 @@ public class AddOrEditApplication implements Serializable
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();			
+			ex.printStackTrace();
+			
+			if(session.isOpen())
+				session.close();
 		}
 		
 		return "user_updated_error";
@@ -249,18 +271,20 @@ public class AddOrEditApplication implements Serializable
 				 //users.remove(i);
 				 
 				 // remove from database and reload page
+				 
+				 SessionFactory sessionFactory = GetSessionFactory.getInstance();
+				 Session session = sessionFactory.getCurrentSession();//openSession();
+				
 				 try
 				 {
-					 SessionFactory sessionFactory = GetSessionFactory.getInstance();
-					 Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
-			
 					 session.beginTransaction();
 					 
 					 session.delete(applicationsData.getApplications().get(i));//OrUpdate(u);
 					
 					 session.getTransaction().commit();
 					
-					 session.close();
+					 if(session.isOpen())
+							session.close();
 				
 					 
 					 // user deleted from the database
@@ -273,7 +297,10 @@ public class AddOrEditApplication implements Serializable
 				}
 				catch(Exception ex)
 				{
-					ex.printStackTrace();			
+					ex.printStackTrace();
+					
+					 if(session.isOpen())
+							session.close();
 				}
 				
 				return "deleting_error";

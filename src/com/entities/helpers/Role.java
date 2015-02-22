@@ -1,4 +1,4 @@
-package com.entities_and_database;
+package com.entities.helpers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,14 +18,14 @@ public class Role implements GrantedAuthority, Serializable
    
     //private int id;	// user id
     
-    String userRole;	// user role
+	RoleType userRole;	// user role
 
 //    @OneToMany
 //    private final Collection<Operation> allowedOperations = new ArrayList<Operation>();
 
     @Override
     public String getAuthority() {
-        return userRole;
+    	return userRole.toString();
     }
 
 //    public Collection<Operation> getAllowedOperations() {
@@ -36,18 +36,19 @@ public class Role implements GrantedAuthority, Serializable
     @Override
     public String toString()
     {
-    	return userRole;
+    	return userRole.toString();
     }
 
-	public String getUserRole()
+	public RoleType getUserRole()
 	{
 		return userRole;
 	}
 
-	public void setUserRole(String userRole)
+	public void setUserRole(RoleType userRole)
 	{
 		this.userRole = userRole;
 	}
+	
 	
 	
 }

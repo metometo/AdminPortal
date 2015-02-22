@@ -13,11 +13,11 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.entities_and_database.Computer;
-import com.entities_and_database.GetSessionFactory;
-import com.entities_and_database.HibernateCommonMethods;
-import com.entities_and_database.Role;
-import com.entities_and_database.User;
+import com.entities.Computer;
+import com.entities.User;
+import com.entities.helpers.GetSessionFactory;
+import com.entities.helpers.HibernateCommonMethods;
+import com.entities.helpers.Role;
 import com.managedbeans.TableActiveTabManager;
 import com.managedbeans.users_tab.UsersTable;
 

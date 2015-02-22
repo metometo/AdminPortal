@@ -15,8 +15,8 @@
 				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">			                 
 		                    <h:form>
 			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddApplication').show();" />		                
-				                <p:commandButton value="Edit" disabled="#{applicationsData.selectedApplication.appName==null}" type="button"  onclick="PF('dlgEditApplication').show();" />
-								<p:commandButton value="Delete" disabled="#{applicationsData.selectedApplication.appName==null}" ajax="false" onclick="return confirm('Are you sure you want to delete application \'#{applicationsData.selectedApplication.appName}\'?');" action="#{addOrEditApplication.deleteSelectedAppliction}" />
+				                <p:commandButton value="Edit" disabled="#{applicationsData.selectedApplication.name==null}" type="button"  onclick="PF('dlgEditApplication').show();" />
+								<p:commandButton value="Delete" disabled="#{applicationsData.selectedApplication.name==null}" ajax="false" onclick="return confirm('Are you sure you want to delete application \'#{applicationsData.selectedApplication.name}\'?');" action="#{addOrEditApplication.deleteSelectedAppliction}" />
 							</h:form>
 									                
 	            </h:panelGrid>
@@ -35,8 +35,8 @@
 	              	
 	            <p:ajax event="rowSelect" listener="#{applicationsData.onRowSelect}" />
 	
-				<p:column headerText="Appication name" sortBy="#{app.appName}">
-		      		<h:outputText value="#{app.appName}" />							      
+				<p:column headerText="Appication name" sortBy="#{app.name}">
+		      		<h:outputText value="#{app.name}" />							      
 				</p:column>	                	           						
 		   
 			    <p:column headerText="Vendor name" sortBy="#{app.vendorName}">
@@ -73,7 +73,7 @@
 			<h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
 				   
 			<p:outputLabel for="applicationNameAddApplication" value="Application Name:" />  
-			<p:inputText id="applicationNameAddApplication" required="true" value="#{addOrEditApplication.application.appName}"/>  
+			<p:inputText id="applicationNameAddApplication" required="true" value="#{addOrEditApplication.application.name}"/>  
 			<p:message for="applicationNameAddApplication" display="text" style="color:red" />
 
 				                   
@@ -122,7 +122,7 @@
 		   	
 		   
 		    <p:outputLabel for="nameEditApplication" value="Application Name:" />  
-		    <p:outputLabel id="nameEditApplication" value="#{applicationsData.selectedApplication.appName}" />  
+		    <p:outputLabel id="nameEditApplication" value="#{applicationsData.selectedApplication.name}" />  
 		    <p:message for="nameEditApplication" display="text" style="color:red" />
 		    
 		    

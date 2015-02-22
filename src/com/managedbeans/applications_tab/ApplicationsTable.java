@@ -19,9 +19,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.primefaces.event.SelectEvent;
 
-import com.entities_and_database.Application;
-import com.entities_and_database.Computer;
-import com.entities_and_database.GetSessionFactory;
+import com.entities.Application;
+import com.entities.Computer;
+import com.entities.helpers.GetSessionFactory;
 import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name="applicationsData")
@@ -128,31 +128,37 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 	{
 		
 		SessionFactory sessionFactory = GetSessionFactory.getInstance();
-		Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
+		Session session = sessionFactory.getCurrentSession();//openSession();
 
-		session.beginTransaction();
-
-		SQLQuery query = session.createSQLQuery("select * from application s");
-		query.addEntity(com.entities_and_database.Application.class);
-		
-		
-		applications = query.list();
-		
-		Hibernate.initialize(applications);
-		
-		// force computers to be loaded from the database (now LAZY loading is ussed, so we need to call the List to initialize it)
-		for (int i = 0; i < applications.size(); i++)
+		try
 		{
-			//ArrayList<Computer> computerArray = new ArrayList<Computer>();
-			
-			Application a = applications.get(i);
-			
-			Hibernate.initialize(a.getComputers());	
-		}
+			session.beginTransaction();
 	
-		session.getTransaction().commit();
+			SQLQuery query = session.createSQLQuery("select * from application s");
+			query.addEntity(com.entities.Application.class);
 			
-		session.close();
+			
+			applications = query.list();
+			
+			Hibernate.initialize(applications);
+			
+			// force computers to be loaded from the database (now LAZY loading is ussed, so we need to call the List to initialize it)
+			for (int i = 0; i < applications.size(); i++)
+			{
+				//ArrayList<Computer> computerArray = new ArrayList<Computer>();
+				
+				Application a = applications.get(i);
+				
+				Hibernate.initialize(a.getComputers());	
+			}
+		
+			session.getTransaction().commit();
+		}
+		finally
+		{	
+			if(session.isOpen())
+				session.close();
+		}
 		
 		//System.out.println("computers: "+computers);
 	}
