@@ -3,14 +3,36 @@ body	{text-align:center; padding:40px;}
 table { margin: 0 auto;  vertical-align:top; }
 #header	{text-align:left; padding:10px;}
 #logo	{height:40px; }
-#feader-text	{font-size:30pt;}
+#feader_text	{font-size:30pt;}
+
+.clear	{clear:both;}
 
 #content {text-align:center; background:#aaffff; padding:20px;}
+
+.fullWidth {width:100%;}
+.full_width {width:100%;}
+.left_align	{text-align:left;}
+.red_border {border:1px solid red;}
+
+.orange_text  {color:orange;}
+.red_text	{color:red;}
 
 /*login page */
 #j_username	{width:200px;}
 #j_password	{width:200px;}
 
+/*registration page */
+.blue_link {float:left; text-align:left; padding:5px 0px 0px 0px;}
+.left_align {text-align:left;}
+.right_align {text-align:right;}
+
 /* export to csv div and link */
 .csv_template {text-align:right; margin-top:10px; }
 .csv_template a {color:blue; }
+
+
+/* template header */
+.link_position {margin-top:-30px;}
+
+/* admin table */
+.left_float  {float:left;}

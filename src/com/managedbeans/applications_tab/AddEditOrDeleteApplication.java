@@ -1,19 +1,15 @@
 package com.managedbeans.applications_tab;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import com.entities.Application;
 import com.entities.Computer;
 import com.entities.helpers.GetSessionFactory;
@@ -21,7 +17,7 @@ import com.managedbeans.TableActiveTabManager;
 
 @ManagedBean(name = "addOrEditApplication")
 @SessionScoped
-public class AddOrEditApplication implements Serializable
+public class AddEditOrDeleteApplication implements Serializable
 {
 	private Application application;
 	
@@ -32,7 +28,7 @@ public class AddOrEditApplication implements Serializable
 	TableActiveTabManager tableActiveTabManager;
 
 	
-	public AddOrEditApplication()
+	public AddEditOrDeleteApplication()
 	{
 		application = new Application();
 	}
@@ -96,7 +92,7 @@ public class AddOrEditApplication implements Serializable
 				
 				//session.beginTransaction();
 		
-				SQLQuery query = session.createSQLQuery("select * from computer s  WHERE id = :computer_id");
+				SQLQuery query = session.createSQLQuery("select * from computer s  WHERE computer_id = :computer_id");
 				query.addEntity(com.entities.Computer.class);
 				query.setParameter("computer_id", applicationsData.getComputersInstalledOn().get(i));
 				

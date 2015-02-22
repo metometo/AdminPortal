@@ -1,36 +1,29 @@
 package com.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.persistence.CascadeType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.entities.helpers.BaseEntity;
 
 @Entity
 @Table(name="computer")
+@AttributeOverrides({
+	@AttributeOverride(name = "id", column = @Column(name = "computer_id")),
+	@AttributeOverride(name = "name", column = @Column(name = "computer_name"))
+})
 public class Computer extends BaseEntity implements Serializable
 {
-//	@Id
-//	@GeneratedValue
-//	private int id;
-//	
-//	private String name;
+	
+	@Column(name="ip_address")
 	private String ip;
+	
+	@Column(name="login")
 	private String login;
+	
+	@Column(name="password")
 	private String password;
 	
 	
@@ -57,14 +50,5 @@ public class Computer extends BaseEntity implements Serializable
 	public void setPassword(String password)
 	{
 		this.password = password;
-	}
-
-
-//	@Override
-//	public String toString()
-//	{
-//		// TODO Auto-generated method stub
-//		return "comp.name: "+name + ", ip: " + ip + "";
-//	}
-	
+	}	
 }

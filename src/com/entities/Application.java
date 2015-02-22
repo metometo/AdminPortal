@@ -4,25 +4,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.entities.helpers.BaseEntity;
 
 @Entity
 @Table(name="application")
+@AttributeOverrides({
+	@AttributeOverride(name = "id", column = @Column(name = "app_id")),
+	@AttributeOverride(name = "name", column = @Column(name = "app_name"))
+})
 public class Application extends BaseEntity implements Serializable
 {
+	@Column(name="vendor_name")
 	private String vendorName;
+	
+	@Column(name="license_required")
 	private boolean licenseRequired;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //mappedBy="applications",

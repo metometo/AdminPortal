@@ -2,10 +2,8 @@ package com.managedbeans;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -16,20 +14,13 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.WebAttributes;
-
 import com.entities.helpers.GetSessionFactory;
 import com.entities.helpers.HibernateCommonMethods;
 import com.entities.helpers.RoleType;
-import com.àuthentication.UsersAuthentication;
 
 @ManagedBean(name = "loginController")
 @SessionScoped
@@ -37,10 +28,7 @@ public class LoginController implements PhaseListener
 {
 	private String user;
 	private String password;
-	//private String role;
 	private ArrayList<RoleType> roles=new ArrayList<RoleType>();
-
-	//protected final Log logger = LogFactory.getLog(getClass());
 
 	/**
 	 *
@@ -89,7 +77,6 @@ public class LoginController implements PhaseListener
 
 		if (e instanceof BadCredentialsException)
 		{
-			//logger.debug("Found exception in session map: " + e);
 			FacesContext.getCurrentInstance().getExternalContext()
 					.getSessionMap()
 					.put(WebAttributes.AUTHENTICATION_EXCEPTION, null);
@@ -99,8 +86,6 @@ public class LoginController implements PhaseListener
 							"Username or password not valid.",
 							"Username or password not valid"));
 		}
-		
-		System.out.println("error=========================================");
 	}
 
 	/*
@@ -141,14 +126,9 @@ public class LoginController implements PhaseListener
 	}
 
 	public boolean hasRole(String role)
-	{
-		System.out.println(role + "-------------------------" + roles.size());
-		
+	{		
 		for (int i = 0; i < roles.size(); i++)
 		{
-			System.out.println(roles.get(i));
-			System.out.println(role + "-------------------------");
-			
 			if (roles.get(i).equals(role))
 				return true;
 		}
@@ -162,23 +142,14 @@ public class LoginController implements PhaseListener
 		Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
 
 		session.beginTransaction();
-		com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
-																			// session.load(com.entities.User.class,
-																			// 1);
+		com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);
 		session.getTransaction().commit();
 
 
 		roles.clear(); // clear old data from previous session logins
 		
 		if(userEntity!=null)	// user exists
-		roles.add(userEntity.getRole());	// adds all roles to the class array
-//		if(userEntity!=null)
-//		for (int i = 0; i < userEntity.getRole().size(); i++)
-//		{
-//			roles.add(userEntity.getRoles().get(i).getAuthority());	// adds all roles to the class array
-//		}
-		
-		//System.out.println(roles+"==========================");
+			roles.add(userEntity.getRole());	// adds all user roles to the class array
 		
 		session.close();
 				

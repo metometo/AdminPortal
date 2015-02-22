@@ -3,22 +3,17 @@ package com.managedbeans.applications_tab;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.primefaces.event.SelectEvent;
-
 import com.entities.Application;
 import com.entities.Computer;
 import com.entities.helpers.GetSessionFactory;
@@ -27,19 +22,19 @@ import com.managedbeans.TableActiveTabManager;
 @ManagedBean(name="applicationsData")
 @SessionScoped
 public class ApplicationsTable	implements Serializable//, SelectableDataModel<User>
-{
-	//private List<User> selectedUsers;
-	
-	private List<String> computersInstalledOn = new ArrayList<String>();
+{	
+	private List<String> computersInstalledOn = new ArrayList<String>();	// list of all computer on which current application is being installed
 
 	private List<Computer> allComputers = new ArrayList<Computer>();	// list of all registered computers in the database	
-	private Application selectedApplication;// = new Application();
+	private Application selectedApplication;
 	private int selectedApplicationId;
 	private List<Application> applications = new ArrayList<Application>();
 	
 	@ManagedProperty(value = "#{tableActiveTabManager}")
 	TableActiveTabManager tableActiveTabManager;
 
+	
+	
 	
 
 	public List<String> getComputersInstalledOn()
@@ -191,7 +186,6 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 			}
 			catch (IOException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	          

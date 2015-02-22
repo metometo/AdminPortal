@@ -13,7 +13,7 @@
  			
  			<ui:define name="header">
  				<h:graphicImage value="resources/images/logo.bmp" id="logo" />
-				<span id="feader-text">Admin Portal</span>
+				<span id="feader_text">Admin Portal</span>
 			</ui:define>
  			
  			
@@ -23,7 +23,7 @@
     			<br />
     			
     			<h3>
-    			<p:outputLabel value="You are now registered." rendered="#{param['registered']=='true'}" style="color:orange;"/>
+    			<p:outputLabel value="You are now registered." rendered="#{param['registered']=='true'}" styleClass="orange_text"/>
     			</h3>   			
     			
     			<br />
@@ -33,17 +33,17 @@
 				    <!-- Id's must not be changed to support spring security check -->
 				    <h:panelGrid columns="3" cellpadding="5" cellspacing="1">
 					   
-					    <p:outputLabel for="j_username" value="#{msg['username']}" style="width:400px;" />  
+					    <p:outputLabel for="j_username" value="#{msg['username']}" />  
 					    <p:inputText id="j_username" required="true" label="username" value="#{loginController.user}" />  
 					    
 					    <h:panelGroup columns="2"> <!--  Prints first textfield messsage and "wrong user name or password" for the whole form -->
-						    <p:outputLabel value="Wrong user name or password." rendered="#{param['authenticated']=='false'}" style="color:red"/>
-						 	<p:message for="j_username" display="text" style="color:red" />
+						    <p:outputLabel value="Wrong user name or password." rendered="#{param['authenticated']=='false'}" styleClass="orange_text" />
+						 	<p:message for="j_username" display="text" />
 						</h:panelGroup>
 					                   
 					    <p:outputLabel for="j_password" value="#{msg['password']}" />  
 					    <p:password id="j_password" label="password" required="true" value="#{loginController.password}" />  
-					    <p:message for="j_password" display="text" style="color:red"/>
+					    <p:message for="j_password" display="text" />
 					                   
 					    <!-- 
 					    <h:outputLabel for="_spring_security_remember_me" value="Remember me: " />
@@ -52,12 +52,12 @@
 					     -->
 					   
 					    <h:panelGroup columns="2">
-					    	<div style="float:left; text-align:left; padding:5px 0px 0px 0px;">
+					    	<div class="blue_link" >
 								<h:outputLink value="registration.jsf">
 									<p:outputLabel value="#{msg['registration']}" />
 								</h:outputLink>
 							</div>
-							<div style="text-align:right;">
+							<div class="right_align">
 								<p:commandButton type="submit"  id="login" ajax="false" value="#{msg['login']}" action="#{loginController.doLogin}" />
 							</div>
 						</h:panelGroup>

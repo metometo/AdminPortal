@@ -11,7 +11,7 @@
     <h:body>
 
 		<div>
-            <div style="float:left">
+            <div class="left_float">
 				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}" >			                 
 		                    <h:form>
 			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddComputer').show();" />		                
@@ -21,7 +21,7 @@
 									                
 	            </h:panelGrid>
            	</div>
-           	<div style="clear:both;"></div>
+           	<div class="clear" ></div>
     	</div>
                
 	    <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
@@ -71,25 +71,25 @@
 	    <h:form id="addComputerForm" prependId="false" binding="#{addComputerForm}">
 		<p:dialog id="dlgAddComputer" header="Add New Computer" widgetVar="dlgAddComputer" modal="true" height="300">												
 			
-			<h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+			<h:panelGrid columns="3" cellpadding="5" cellspacing="1" styleClass="left_align"  >
 				   
 			<p:outputLabel for="computerNameAddComputer" value="Computer Name:" />  
 			<p:inputText id="computerNameAddComputer" required="true" value="#{registerComputer.name}"/>  
-			<p:message for="computerNameAddComputer" display="text" style="color:red" />
+			<p:message for="computerNameAddComputer" display="text" styleClass="red_text"/>
 
 				                   
 		    <p:outputLabel for="ipAddComputer" value="IP:" />  
 		    <p:inputText id="ipAddComputer" required="true" value="#{registerComputer.ip}" />  
-		    <p:message for="ipAddComputer" display="text" style="color:red" />
+		    <p:message for="ipAddComputer" display="text" styleClass="red_text" />
 		                   
 				    
 		    <p:outputLabel for="loginAddComputer" value="Login:" />  
 		    <p:inputText id="loginAddComputer" required="true" value="#{registerComputer.login}" />  
-		    <p:message for="loginAddComputer" display="text" style="color:red" />
+		    <p:message for="loginAddComputer" display="text" styleClass="red_text" />
 		    
 		    <p:outputLabel for="passwordAddComputer" value="Password:" />  
 		    <p:password id="passwordAddComputer" required="true" value="#{registerComputer.password}" />  
-		    <p:message for="passwordAddComputer" display="text" style="color:red" />
+		    <p:message for="passwordAddComputer" display="text" styleClass="red_text" />
 		    
 		    
 		    <p:outputLabel value="" />
@@ -110,25 +110,25 @@
 	<p:dialog id="dlgEditComputer" header="Edit Computer" widgetVar="dlgEditComputer" modal="true" height="300">												
 	
 	
-	   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+	   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" styleClass="left_align"  >
 		   
 		    <p:outputLabel for="nameEditComputer" value="Computer Name:" />  
 		    <p:outputLabel id="nameEditComputer" value="#{computersData.selectedComputer.name}" />  
-		    <p:message for="nameEditComputer" display="text" style="color:red" />
+		    <p:message for="nameEditComputer" display="text" styleClass="red_text" />
 		    
 		    
 		    <p:outputLabel for="ipEditComputer" value="IP:" />  
 		    <p:inputText id="ipEditComputer" required="true" value="#{editComputer.newIP}" />  
-		    <p:message for="ipEditComputer" display="text" style="color:red" />
+		    <p:message for="ipEditComputer" display="text" styleClass="red_text" />
 		                   
 		    
 		    <p:outputLabel for="loginEditComputer" value="Login:" />  
 		    <p:inputText id="loginEditComputer" required="true" value="#{editComputer.newLogin}" />  
-		    <p:message for="loginEditComputer" display="text" style="color:red" />
+		    <p:message for="loginEditComputer" display="text" styleClass="red_text" />
 		    
 		    <p:outputLabel for="passwordEditComputer" value="Password:" />  
 		    <p:password id="passwordEditComputer" required="true" value="#{editComputer.newPassword}" />  
-		    <p:message for="passwordEditComputer" display="text" style="color:red" />
+		    <p:message for="passwordEditComputer" display="text" styleClass="red_text" />
 		    
 		    
 		    <p:outputLabel value="" />

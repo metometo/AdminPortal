@@ -11,7 +11,7 @@
     <h:body>
 
 		<div>
-            <div style="float:left">
+            <div class="left_float">
 				<h:panelGrid columns="6" cellpadding="1" cellspacing="1" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">			                 
 		                    <h:form>
 			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddApplication').show();" />		                
@@ -21,7 +21,7 @@
 									                
 	            </h:panelGrid>
            	</div>
-           	<div style="clear:both;"></div>
+           	<div class="clear" ></div>
     	</div>
                
 	    <h:panelGrid columns="2" cellpadding="1" cellspacing="1" >
@@ -48,7 +48,7 @@
 			    </p:column>
 			   	  
 			   	<p:column headerText="Instaled on" >
-			   		<h:selectManyListbox id="computersListEditApplication"  size="4" style="width:100%">  
+			   		<h:selectManyListbox id="computersListEditApplication"  size="4" styleClass="full_width">  
 					  <f:selectItems var="computer" value="#{app.computers}" 
 						itemValue="#{computer.id}" itemLabel="#{computer.name}"					 
 					  />
@@ -70,40 +70,36 @@
 	    <h:form id="addApplicationForm" prependId="false" binding="#{addApplicationForm}">
 		<p:dialog id="dlgAddApplication" header="Add New Application" widgetVar="dlgAddApplication" modal="true" height="270">												
 			
-			<h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+			<h:panelGrid columns="2" cellpadding="5" cellspacing="1" styleClass="left_align"  >
 				   
 			<p:outputLabel for="applicationNameAddApplication" value="Application Name:" />  
-			<p:inputText id="applicationNameAddApplication" required="true" value="#{addOrEditApplication.application.name}"/>  
-			<p:message for="applicationNameAddApplication" display="text" style="color:red" />
-
+			<p:inputText id="applicationNameAddApplication" required="true" value="#{addOrEditApplication.application.name}" styleClass="fullWidth" />  
+			
 				                   
 		    <p:outputLabel for="vandorNameAddApplication" value="Vendor Name:" />  
-		    <p:inputText id="vandorNameAddApplication" required="true" value="#{addOrEditApplication.application.vendorName}" />  
-		    <p:message for="vandorNameAddApplication" display="text" style="color:red" />
+		    <p:inputText id="vandorNameAddApplication" required="true" value="#{addOrEditApplication.application.vendorName}" styleClass="fullWidth" />  
 		                   
 				    
 		    <p:outputLabel for="licenseRequiredAddApplication" value="License Required:" />  
-		     <p:selectBooleanCheckbox id="licenseRequiredAddApplication"  value="#{addOrEditApplication.application.licenseRequired}" />  
-		    <p:message for="licenseRequiredAddApplication" display="text" style="color:red" />
+		    <p:selectBooleanCheckbox id="licenseRequiredAddApplication"  value="#{addOrEditApplication.application.licenseRequired}" />  
 		    
 		    
 		    
 		    <p:outputLabel for="computersListAddApplication" value="Installed on" />  
-		    <h:selectManyListbox id="computersListAddApplication" value="#{applicationsData.computersInstalledOn}"  size="4">  
+		    <h:selectManyListbox id="computersListAddApplication" value="#{applicationsData.computersInstalledOn}"  size="4" styleClass="fullWidth" >  
 				  <f:selectItems var="computer" value="#{computersData.computers}" 
 					itemValue="#{computer.id}" itemLabel="#{computer.name}" 
 				  />				  				  
 			</h:selectManyListbox>  
-			<p:message for="computersListAddApplication" display="text" style="color:red" />
 			
-			
-		    
 		    
 		    <p:outputLabel value="" />
-		   	<p:commandButton type="submit" ajax="true" id="addApplication" value="Add application" action="#{addOrEditApplication.registerNewApplication}" 
-		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
-		   		/>
-		    <p:outputLabel value="&nbsp;" />
+		   	<h:panelGroup columns="2">
+			   	<p:commandButton type="submit" ajax="true" id="addApplication" value="Add application" action="#{addOrEditApplication.registerNewApplication}" 
+			   			oncomplete="if (args.validationFailed) alert('All fields are required');"
+			   		/> &nbsp;
+			    <p:commandButton value="Cancel" type="button"  onclick="PF('dlgAddApplication').hide();" />
+			</h:panelGroup>
 			
 	    </h:panelGrid>						
 	</p:dialog>				 
@@ -117,23 +113,23 @@
 	<p:dialog id="dlgEditApplication" header="Edit Application" widgetVar="dlgEditApplication" modal="true" height="300">												
 	
 	
-	   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" style="text-align:left;"  >
+	   <h:panelGrid columns="2" cellpadding="5" cellspacing="1" styleClass="left_align"  >
 		   
 		   	
 		   
 		    <p:outputLabel for="nameEditApplication" value="Application Name:" />  
 		    <p:outputLabel id="nameEditApplication" value="#{applicationsData.selectedApplication.name}" />  
-		    <p:message for="nameEditApplication" display="text" style="color:red" />
+		
 		    
 		    
 		    <p:outputLabel for="vandorNameEditApplication" value="Vendor Name:" />  
-		    <p:inputText id="vandorNameEditApplication" required="true" value="#{addOrEditApplication.application.vendorName}" />  
-		    <p:message for="vandorNameEditApplication" display="text" style="color:red" />
+		    <p:inputText id="vandorNameEditApplication" required="true" value="#{addOrEditApplication.application.vendorName}" styleClass="fullWidth" />  
+		    
 		                   
 				    
 		    <p:outputLabel for="licenseRequiredEditApplication" value="License Required:" />  
 		    <p:selectBooleanCheckbox id="licenseRequiredEditApplication"  value="#{addOrEditApplication.application.licenseRequired}" />		
-		    <p:message for="licenseRequiredEditApplication" display="text" style="color:red" />
+		    
 		    
 		    
 		    <p:outputLabel for="computersListEditApplication" value="Installed on" />  
@@ -142,15 +138,16 @@
 					itemValue="#{computer.id}" itemLabel="#{computer.name}"					 
 				  />
 			</h:selectManyListbox>  
-			<p:message for="computersListEditApplication" display="text" style="color:red" />
+			
 		    
 		    
 		    <p:outputLabel value="" />
-		   	<p:commandButton type="submit" ajax="true" id="editApplication" value="Edit application" action="#{addOrEditApplication.editApplication}" 
-		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
-		   		/>
-		    <p:outputLabel value="&nbsp;" />
-			
+		   	<h:panelGroup columns="2">
+			   	<p:commandButton type="submit" ajax="true" id="editApplication" value="Edit application" action="#{addOrEditApplication.editApplication}" 
+			   			oncomplete="if (args.validationFailed) alert('All fields are required');"
+			   		/> &nbsp;
+			    <p:commandButton value="Cancel" type="button"  onclick="PF('dlgEditApplication').hide();" />
+			</h:panelGroup>
 	    </h:panelGrid>
 	    
 	    

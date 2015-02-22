@@ -1,24 +1,15 @@
-package com.managedbeans;
+package com.managedbeans.users_tab;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import com.entities.User;
 import com.entities.helpers.GetSessionFactory;
-import com.entities.helpers.HibernateCommonMethods;
-import com.entities.helpers.Role;
 import com.entities.helpers.RoleType;
-import com.managedbeans.users_tab.UsersTable;
 
 @ManagedBean(name = "registerController")
 @SessionScoped
@@ -34,7 +25,6 @@ public class RegisterController implements Serializable
 	UsersTable usersData;
 	
 	
-	
 	public UsersTable getUsersData()
 	{
 		return usersData;
@@ -45,6 +35,7 @@ public class RegisterController implements Serializable
 		this.usersData = usersData;
 	}
 
+	
 	public String getFirstName()
 	{
 		return firstName;
@@ -55,7 +46,7 @@ public class RegisterController implements Serializable
 		this.firstName = firstName;
 	}
 
-
+	
 	public String getLastName()
 	{
 		return lastName;
@@ -65,7 +56,6 @@ public class RegisterController implements Serializable
 	{
 		this.lastName = lastName;
 	}
-
 
 
 	public String getUsername()
@@ -111,8 +101,7 @@ public class RegisterController implements Serializable
 			Session session = sessionFactory.openSession();//getCurrentSession();//openSession();
 	
 			session.beginTransaction();
-			//com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
-				
+			
 			// crate User object and sava it to the database
 			User u = new User();
 			u.setName(firstName);
@@ -120,26 +109,18 @@ public class RegisterController implements Serializable
 			u.setUserName(username);
 			u.setPassword(password);
 			
-//			ArrayList<Role> roles = new ArrayList<Role>();
-//			Role r = new Role();
 			
-		
 			if(adminRole)
-			{
-				//r.setUserRole("ROLE_ADMIN");	
+			{	
 				u.setRole(RoleType.ROLE_ADMIN);
 			}
 			else
 			{
-				//r.setUserRole("ROLE_USER");
 				u.setRole(RoleType.ROLE_USER);
 			}
 			
-			//roles.add(r);
-			//u.setRoles(roles);
-			
-			
-			session.save(u);//OrUpdate(u);
+					
+			session.save(u);
 			
 			session.getTransaction().commit();
 			
