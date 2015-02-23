@@ -201,10 +201,9 @@ public class AddEditOrDeleteApplication implements Serializable
 					
 					//session.beginTransaction();
 			
-					SQLQuery query = session.createSQLQuery("select * from computer s  WHERE id = :computer_id");
+					SQLQuery query = session.createSQLQuery("select * from computer s  WHERE computer_id = :computer_id");
 					query.addEntity(com.entities.Computer.class);
 					query.setParameter("computer_id", applicationsData.getComputersInstalledOn().get(i));
-					
 					
 					
 					List<Computer> c = query.list();	// indeed only one computer is returned
