@@ -71,33 +71,33 @@
 	    <h:form id="addComputerForm" prependId="false" binding="#{addComputerForm}">
 		<p:dialog id="dlgAddComputer" header="Add New Computer" widgetVar="dlgAddComputer" modal="true" height="300">												
 			
-			<h:panelGrid columns="3" cellpadding="5" cellspacing="1" styleClass="left_align"  >
+			<h:panelGrid columns="2" cellpadding="5" cellspacing="1" styleClass="left_align"  >
 				   
 			<p:outputLabel for="computerNameAddComputer" value="Computer Name:" />  
 			<p:inputText id="computerNameAddComputer" required="true" value="#{registerComputer.name}"/>  
-			<p:message for="computerNameAddComputer" display="text" styleClass="red_text"/>
+	
 
 				                   
 		    <p:outputLabel for="ipAddComputer" value="IP:" />  
 		    <p:inputText id="ipAddComputer" required="true" value="#{registerComputer.ip}" />  
-		    <p:message for="ipAddComputer" display="text" styleClass="red_text" />
+		  
 		                   
 				    
 		    <p:outputLabel for="loginAddComputer" value="Login:" />  
 		    <p:inputText id="loginAddComputer" required="true" value="#{registerComputer.login}" />  
-		    <p:message for="loginAddComputer" display="text" styleClass="red_text" />
+		
 		    
 		    <p:outputLabel for="passwordAddComputer" value="Password:" />  
-		    <p:password id="passwordAddComputer" required="true" value="#{registerComputer.password}" />  
-		    <p:message for="passwordAddComputer" display="text" styleClass="red_text" />
+		    <p:password id="passwordAddComputer" required="true" value="#{registerComputer.password}" /> 
 		    
 		    
 		    <p:outputLabel value="" />
-		   	<p:commandButton type="submit" ajax="true" id="addComputer" value="Add computer" action="#{registerComputer.registerNewComputer}" 
-		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
-		   		/>
-		    <p:outputLabel value="&nbsp;" />
-			
+			 <h:panelGroup columns="2">
+			   	<p:commandButton type="submit" ajax="true" id="addComputer" value="Add computer" action="#{registerComputer.registerNewComputer}" 
+			   			oncomplete="if (args.validationFailed) alert('All fields are required');" />
+			    <p:commandButton value="Cancel" type="button"  onclick="PF('dlgAddComputer').hide();" />
+			 </h:panelGroup>
+
 	    </h:panelGrid>						
 	</p:dialog>				 
 	</h:form>
@@ -110,33 +110,31 @@
 	<p:dialog id="dlgEditComputer" header="Edit Computer" widgetVar="dlgEditComputer" modal="true" height="300">												
 	
 	
-	   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" styleClass="left_align"  >
+	   <h:panelGrid columns="2" cellpadding="5" cellspacing="1" styleClass="left_align"  >
 		   
 		    <p:outputLabel for="nameEditComputer" value="Computer Name:" />  
-		    <p:outputLabel id="nameEditComputer" value="#{computersData.selectedComputer.name}" />  
-		    <p:message for="nameEditComputer" display="text" styleClass="red_text" />
+		    <p:outputLabel id="nameEditComputer" value="#{computersData.selectedComputer.name}" styleClass="fullWidth" />  
 		    
 		    
 		    <p:outputLabel for="ipEditComputer" value="IP:" />  
 		    <p:inputText id="ipEditComputer" required="true" value="#{editComputer.newIP}" />  
-		    <p:message for="ipEditComputer" display="text" styleClass="red_text" />
-		                   
+		   
 		    
 		    <p:outputLabel for="loginEditComputer" value="Login:" />  
 		    <p:inputText id="loginEditComputer" required="true" value="#{editComputer.newLogin}" />  
-		    <p:message for="loginEditComputer" display="text" styleClass="red_text" />
+		
 		    
 		    <p:outputLabel for="passwordEditComputer" value="Password:" />  
 		    <p:password id="passwordEditComputer" required="true" value="#{editComputer.newPassword}" />  
-		    <p:message for="passwordEditComputer" display="text" styleClass="red_text" />
-		    
+		   
 		    
 		    <p:outputLabel value="" />
-		   	<p:commandButton type="submit" ajax="true" id="editComputer" value="Edit computer" action="#{editComputer.editComputer}" 
-		   			oncomplete="if (args.validationFailed) alert('All fields are required');"
-		   	>
-			</p:commandButton>
-		    <p:outputLabel value="&nbsp;" />
+			<h:panelGroup columns="2">   	
+			   	<p:commandButton type="submit" ajax="true" id="editComputer" value="Edit computer" action="#{editComputer.editComputer}" 
+			   			oncomplete="if (args.validationFailed) alert('All fields are required');" 	>
+				</p:commandButton>
+			    <p:commandButton value="Cancel" type="button"  onclick="PF('dlgEditComputer').hide();" />
+			 </h:panelGroup>
 			
 	    </h:panelGrid>
 	    

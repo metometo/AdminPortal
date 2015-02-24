@@ -32,9 +32,6 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 	
 	@ManagedProperty(value = "#{tableActiveTabManager}")
 	TableActiveTabManager tableActiveTabManager;
-
-	
-	
 	
 
 	public List<String> getComputersInstalledOn()
@@ -121,6 +118,7 @@ public class ApplicationsTable	implements Serializable//, SelectableDataModel<Us
 	 */
 	public void loadApplicationsFromDatabase()
 	{
+		applications.clear();
 		
 		SessionFactory sessionFactory = GetSessionFactory.getInstance();
 		Session session = sessionFactory.getCurrentSession();//openSession();

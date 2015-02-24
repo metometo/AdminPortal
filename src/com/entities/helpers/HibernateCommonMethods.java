@@ -5,9 +5,11 @@ import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
+import com.entities.User;
+
 public class HibernateCommonMethods
 {
-	public static com.entities.User getUserbyUsername(String username, Session session)
+	public static User getUserbyUsername(String username, Session session)
 	{
 		SQLQuery query = session.createSQLQuery("select * from user s where s.userName = :usrname");
 		query.addEntity(com.entities.User.class);

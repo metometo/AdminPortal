@@ -35,6 +35,9 @@ public class UsersAuthentication implements UserDetailsService
         com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(username, session);//(com.entities.User) session.load(com.entities.User.class, 1);
         session.getTransaction().commit();
         
+        if(userEntity==null)
+        	return null;
+        
         ArrayList<Role> role = new ArrayList<Role>();
         Role r = new Role();
         r.setUserRole(userEntity.getRole());

@@ -16,7 +16,7 @@
 		                    <h:form>
 			                    <p:commandButton value="Add"  type="button"  onclick="PF('dlgAddApplication').show();" />		                
 				                <p:commandButton value="Edit" disabled="#{applicationsData.selectedApplication.name==null}" type="button"  onclick="PF('dlgEditApplication').show();" />
-								<p:commandButton value="Delete" disabled="#{applicationsData.selectedApplication.name==null}" ajax="false" onclick="return confirm('Are you sure you want to delete application \'#{applicationsData.selectedApplication.name}\'?');" action="#{addOrEditApplication.deleteSelectedAppliction}" />
+								<p:commandButton value="Delete" disabled="#{applicationsData.selectedApplication.name==null}" ajax="false" onclick="return confirm('Are you sure you want to delete application \'#{applicationsData.selectedApplication.name}\'?');" action="#{addEditOrDeleteApplication.deleteSelectedAppliction}" />
 							</h:form>
 									                
 	            </h:panelGrid>
@@ -71,17 +71,16 @@
 		<p:dialog id="dlgAddApplication" header="Add New Application" widgetVar="dlgAddApplication" modal="true" height="270">												
 			
 			<h:panelGrid columns="2" cellpadding="5" cellspacing="1" styleClass="left_align"  >
-				   
 			<p:outputLabel for="applicationNameAddApplication" value="Application Name:" />  
-			<p:inputText id="applicationNameAddApplication" required="true" value="#{addOrEditApplication.application.name}" styleClass="fullWidth" />  
+			<p:inputText id="applicationNameAddApplication" required="true" value="#{addEditOrDeleteApplication.newApplication.name}" styleClass="fullWidth" />  
 			
 				                   
 		    <p:outputLabel for="vandorNameAddApplication" value="Vendor Name:" />  
-		    <p:inputText id="vandorNameAddApplication" required="true" value="#{addOrEditApplication.application.vendorName}" styleClass="fullWidth" />  
+		    <p:inputText id="vandorNameAddApplication" required="true" value="#{addEditOrDeleteApplication.newApplication.vendorName}" styleClass="fullWidth" />  
 		                   
 				    
 		    <p:outputLabel for="licenseRequiredAddApplication" value="License Required:" />  
-		    <p:selectBooleanCheckbox id="licenseRequiredAddApplication"  value="#{addOrEditApplication.application.licenseRequired}" />  
+		    <p:selectBooleanCheckbox id="licenseRequiredAddApplication"  value="#{addEditOrDeleteApplication.newApplication.licenseRequired}" />  
 		    
 		    
 		    
@@ -95,7 +94,7 @@
 		    
 		    <p:outputLabel value="" />
 		   	<h:panelGroup columns="2">
-			   	<p:commandButton type="submit" ajax="true" id="addApplication" value="Add application" action="#{addOrEditApplication.registerNewApplication}" 
+			   	<p:commandButton type="submit" ajax="true" id="addApplication" value="Add application" action="#{addEditOrDeleteApplication.registerNewApplication}" 
 			   			oncomplete="if (args.validationFailed) alert('All fields are required');"
 			   		/> &nbsp;
 			    <p:commandButton value="Cancel" type="button"  onclick="PF('dlgAddApplication').hide();" />
@@ -123,12 +122,12 @@
 		    
 		    
 		    <p:outputLabel for="vandorNameEditApplication" value="Vendor Name:" />  
-		    <p:inputText id="vandorNameEditApplication" required="true" value="#{addOrEditApplication.application.vendorName}" styleClass="fullWidth" />  
+		    <p:inputText id="vandorNameEditApplication" required="true" value="#{applicationsData.selectedApplication.vendorName}" styleClass="fullWidth" />  
 		    
 		                   
 				    
 		    <p:outputLabel for="licenseRequiredEditApplication" value="License Required:" />  
-		    <p:selectBooleanCheckbox id="licenseRequiredEditApplication"  value="#{addOrEditApplication.application.licenseRequired}" />		
+		    <p:selectBooleanCheckbox id="licenseRequiredEditApplication"  value="#{applicationsData.selectedApplication.licenseRequired}" />		
 		    
 		    
 		    
@@ -143,7 +142,7 @@
 		    
 		    <p:outputLabel value="" />
 		   	<h:panelGroup columns="2">
-			   	<p:commandButton type="submit" ajax="true" id="editApplication" value="Edit application" action="#{addOrEditApplication.editApplication}" 
+			   	<p:commandButton type="submit" ajax="true" id="editApplication" value="Edit application" action="#{addEditOrDeleteApplication.editApplication}" 
 			   			oncomplete="if (args.validationFailed) alert('All fields are required');"
 			   		/> &nbsp;
 			    <p:commandButton value="Cancel" type="button"  onclick="PF('dlgEditApplication').hide();" />

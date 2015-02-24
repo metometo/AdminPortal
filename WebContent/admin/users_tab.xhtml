@@ -76,39 +76,40 @@
             <h:form id="addForm" prependId="false" binding="#{addForm}">
             	<p:dialog id="dlgAdd" header="Add New User" widgetVar="dlgAdd" modal="true" height="300">												
 			
-			   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" styleClass="left_align"  >
+			   <h:panelGrid columns="2" cellpadding="5" cellspacing="1" styleClass="left_align"  >
 				   
 				   	<p:outputLabel for="firstNameEdit" value="First Name:" />  
 				    <p:inputText id="firstNameEdit" required="true" value="#{registerController.firstName}"/>  
-				    <p:message for="firstNameEdit" display="text" styleClass="red_text" />
+				    
 				
 				                   
 				    <p:outputLabel for="lastNameEdit" value="Last Name:" />  
 				    <p:inputText id="lastNameEdit" required="true" value="#{registerController.lastName}" />  
-				    <p:message for="lastNameEdit" display="text" styleClass="red_text" />
+				    
 				                   
 				    
 				    <p:outputLabel for="usernameEdit" value="Username:" />  
 				    <p:inputText id="usernameEdit" required="true" value="#{registerController.username}" />  
-				    <p:message for="usernameEdit" display="text" styleClass="red_text" />
+				    
 				    
 				    <p:outputLabel for="passwordEdit" value="Password:" />  
 				    <p:password id="passwordEdit" required="true" value="#{registerController.password}" />  
-				    <p:message for="passwordEdit" display="text" styleClass="red_text" />
+				    
 				    
 				    <p:outputLabel value="Admin"/> 
 				    <h:panelGroup columns="2">
 				    	<p:selectBooleanCheckbox value="#{registerController.adminRole}"/> &nbsp; 
 				    	<p:outputLabel value="Yes" />
 				    </h:panelGroup>
-				    <p:outputLabel value="" />
+				    
 				    
 				    <p:outputLabel value="" />
-				   <p:commandButton type="submit" ajax="true" id="register" value="Add user" action="#{registerController.registerNewUser}" 
-				   	oncomplete="if (args.validationFailed) alert('All fields are required');"
-				   >
-					</p:commandButton>
-				    <p:outputLabel value="&nbsp;" />
+				    <h:panelGroup columns="2">
+				    		<p:commandButton type="submit" ajax="true" id="register" value="Add user" action="#{registerController.registerNewUser}" 
+						   					oncomplete="if (args.validationFailed) alert('All fields are required');" >
+							</p:commandButton>
+						   	<p:commandButton value="Cancel" type="button"  onclick="PF('dlgAdd').hide();" />
+					</h:panelGroup>
 					
 			    </h:panelGrid>						
 			</p:dialog>				 
@@ -121,51 +122,43 @@
           <h:form id="editForm" prependId="false" binding="#{editForm}">
             	<p:dialog id="dlgEdit" header="Edit User" widgetVar="dlgEdit" modal="true" height="300">												
 			
-			<h:panelGroup rendered="#{usersData.selectedUser.name!=null}">
-			   <h:panelGrid columns="3" cellpadding="5" cellspacing="1" styleClass="left_align" >
+			
+			   <h:panelGrid columns="2" cellpadding="5" cellspacing="1" styleClass="left_align" >
 				   
 				   
 				    <p:outputLabel for="username" value="Username:" />  
 				    <p:outputLabel id="username" value="#{usersData.selectedUser.name}" />  
-				    <p:message for="username" display="text" styleClass="red_text" />
 				    
 				    
 				   	<p:outputLabel for="firstName" value="First Name:" />  
 				    <h:inputText id="firstName" required="true" value="#{updateUserController.newFirstName}"/>  
-				    <p:message for="firstName" display="text" styleClass="red_text" />
-				   
+				    
 				                   
 				    <p:outputLabel for="lastName" value="Last Name:" />  
 				    <p:inputText id="lastName" required="true" value="#{updateUserController.newLastName}" />  
-				    <p:message for="lastName" display="text" styleClass="red_text" />
 				    
 				    
 				    <p:outputLabel for="password" value="Password:" />  
 				    <p:password id="password" required="true" value="#{updateUserController.newPassword}" />  
-				    <p:message for="password" display="text" styleClass="red_text" />
+				    
 				    
 				    <p:outputLabel value="Admin"/> 
 				    <h:panelGroup columns="2">
 				    	<p:selectBooleanCheckbox value="#{updateUserController.newAdminRole}"/> &nbsp; 
 				    	<p:outputLabel value="Yes" />
 				    </h:panelGroup>
-				    <p:outputLabel value="" />
+				   
 				    
 				    <p:outputLabel value="" />
-				   	<p:commandButton type="submit" ajax="true" id="edit" value="Update" action="#{updateUserController.editNewUser}" 
-				   	oncomplete="if (args.validationFailed) alert('All fields are required');"
-				   >
-					</p:commandButton>
-				    <p:outputLabel value="&nbsp;" />
-					
-			    </h:panelGrid>
-			    
-			     </h:panelGroup>
-			     
-			     <h:panelGroup rendered="#{usersData.selectedUser.name==null}">
-			     	<br /><br />
-			     	<p:outputLabel value="Plese, first select user from the table and then click 'Edit'."></p:outputLabel>
-			     </h:panelGroup>
+				    <h:panelGroup columns="2">
+					   	<p:commandButton type="submit" ajax="true" id="edit" value="Update" action="#{updateUserController.editNewUser}" 
+					   						oncomplete="if (args.validationFailed) alert('All fields are required');" >
+						</p:commandButton>
+						<p:commandButton value="Cancel" type="button"  onclick="PF('dlgEdit').hide();" />
+				    </h:panelGroup>
+		
+			     </h:panelGrid>
+			   
 			     
 			  </p:dialog>				 
 		</h:form>

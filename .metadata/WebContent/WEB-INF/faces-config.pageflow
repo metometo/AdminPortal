@@ -1,26 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14238242509100" configfile="/AdminPortal/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="registration.xhtml" x="122" y="178" id="pf142404444195912" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" outlinks="pf142404444195913 pf14242758434663" inlinks="pf14242758434663" path="/registration.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="338" y="178" id="pf142404444195914" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf142404444195913" path="/login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/index.xhtml" x="122" y="562" id="pf14242110236100" referenceLink="//@navigationRule.2/@navigationCase.2/@toViewId|" outlinks="pf14242110236101 pf14242110236102 pf14242110236103 pf14242110236104 pf14242110236105 pf14242110236106" inlinks="pf14242110236101 pf14242110236102 pf14242110236103 pf14242110236104 pf14242110236105 pf14242110236106" path="/admin/index.xhtml"/>
-  <links id="pf142404444195913" target="pf142404444195914" source="pf142404444195912" outcome="registered" redirect="true"/>
-  <links id="pf14242110236101" target="pf14242110236100" source="pf14242110236100" outcome="registered" redirect="true">
-    <bendPoints d1Height="-36" d2Height="-36"/>
-    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
-    <bendPoints d1Width="-64" d2Width="-64"/>
-  </links>
-  <links id="pf14242110236102" target="pf14242110236100" source="pf14242110236100" outcome="error" redirect="true">
-    <bendPoints d1Height="-66" d2Height="-66"/>
-    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
-    <bendPoints d1Width="-94" d2Width="-94"/>
-  </links>
-  <links id="pf14242110236103" target="pf14242110236100" source="pf14242110236100" outcome="deleting_error" redirect="true">
-    <bendPoints d1Height="-96" d2Height="-96"/>
-    <bendPoints d1Width="-124" d1Height="-96" d2Width="-124" d2Height="-96"/>
-    <bendPoints d1Width="-124" d2Width="-124"/>
-  </links>
-  <links id="pf14242110236104" target="pf14242110236100" source="pf14242110236100" outcome="user_notselected" redirect="true"/>
-  <links id="pf14242110236105" target="pf14242110236100" source="pf14242110236100" outcome="user_updated" redirect="true"/>
-  <links id="pf14242110236106" target="pf14242110236100" source="pf14242110236100" outcome="user_updated_error" redirect="true"/>
-  <links id="pf14242758434663" target="pf142404444195912" source="pf142404444195912" outcome="user_exist" redirect="true"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/index.xhtml" id="pf14247203440720" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" outlinks="pf14247203440721 pf14247203440723 pf14247203440725 pf14247203440726 pf14247204678247 pf14247474835258 pf14247474835259 pf142474761327010 pf142474761327011" inlinks="pf14247203440721 pf14247203440723 pf14247203440725 pf14247203440726 pf14247204678247 pf14247474835258 pf14247474835259 pf142474761327010 pf142474761327011" path="/admin/index.xhtml"/>
+  <links id="pf14247203440721" target="pf14247203440720" source="pf14247203440720" outcome="registered"/>
+  <links id="pf14247203440723" target="pf14247203440720" source="pf14247203440720" outcome="deleting_error" redirect="true"/>
+  <links id="pf14247203440725" target="pf14247203440720" source="pf14247203440720" outcome="user_updated" redirect="true"/>
+  <links id="pf14247203440726" target="pf14247203440720" source="pf14247203440720" outcome="user_updated_error" redirect="true"/>
+  <links id="pf14247204678247" target="pf14247203440720" source="pf14247203440720" outcome="error" redirect="true"/>
+  <links id="pf14247474835258" target="pf14247203440720" source="pf14247203440720" outcome="application_registered" redirect="true"/>
+  <links id="pf14247474835259" target="pf14247203440720" source="pf14247203440720" outcome="application_registered_error" redirect="true"/>
+  <links id="pf142474761327010" target="pf14247203440720" source="pf14247203440720" outcome="application_updated" redirect="true"/>
+  <links id="pf142474761327011" target="pf14247203440720" source="pf14247203440720" outcome="application_updated_error" redirect="true"/>
 </pageflow:Pageflow>

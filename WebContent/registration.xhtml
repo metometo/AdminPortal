@@ -20,8 +20,11 @@
  			
  			<ui:define name="content">	
  				
- 				<h:outputScript library="js" name="/commonFunctions.js" />
- 				
+ 			
+	    			
+   				<p:messages id="messages" autoUpdate="true" globalOnly="true" closable="true" />
+	    			
+	    			
     			<br /><br />
     			
     			<h:form id="registrationForm" prependId="false">
@@ -41,11 +44,8 @@
 					    
 					    <p:outputLabel for="username" value="Username:" />  
 					    <p:inputText id="username" required="true" value="#{registerController.username}" styleClass="#{param['registered']=='user_exist' ? 'red_border' : '' }" />  
-					    <h:panelGroup>
-					    	<p:message for="username" display="text" style="color:red" />
-					    	<p:outputLabel value="This username is already taken." rendered="#{param['registered']=='user_exist'}" styleClass="red_text" />
-					    </h:panelGroup>
-					    
+						<p:message for="username" display="text" style="color:red" />
+					 					    
 					    
 					    <p:outputLabel for="password" value="Password:" />  
 					    <p:password id="password" required="true" value="#{registerController.password}" />  

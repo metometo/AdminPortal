@@ -30,7 +30,7 @@ public class Application extends BaseEntity implements Serializable
 	@Column(name="license_required")
 	private boolean licenseRequired;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //mappedBy="applications",
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinColumn(unique=false)
 	Collection<Computer> computers = new ArrayList<Computer>();
 	

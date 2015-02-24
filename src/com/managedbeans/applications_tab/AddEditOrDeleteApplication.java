@@ -2,24 +2,28 @@ package com.managedbeans.applications_tab;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
 import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import com.entities.Application;
 import com.entities.Computer;
 import com.entities.helpers.GetSessionFactory;
+import com.managedbeans.PageBean;
 import com.managedbeans.TableActiveTabManager;
 
-@ManagedBean(name = "addOrEditApplication")
+@ManagedBean(name = "addEditOrDeleteApplication")
 @SessionScoped
 public class AddEditOrDeleteApplication implements Serializable
 {
-	private Application application;
+	private Application newApplication;	// variable for the new application dialog
 	
 	@ManagedProperty(value = "#{applicationsData}")
 	ApplicationsTable applicationsData;
@@ -30,7 +34,7 @@ public class AddEditOrDeleteApplication implements Serializable
 	
 	public AddEditOrDeleteApplication()
 	{
-		application = new Application();
+		newApplication = new Application();
 	}
 	
 	
@@ -39,16 +43,17 @@ public class AddEditOrDeleteApplication implements Serializable
 		this.applicationsData = applicationsData;
 	}
 
-	public Application getApplication()
+	public Application getNewApplication()
 	{
-		if(application==null)
-			application = new Application();
-		return application;
+		if(newApplication==null)
+			newApplication = new Application();
+		
+		return newApplication;
 	}
 
-	public void setApplication(Application application)
+	public void setNewApplication(Application newApplication)
 	{
-		this.application = application;
+		this.newApplication = newApplication;
 	}
 
 	public TableActiveTabManager getTableActiveTabManager()
@@ -75,16 +80,14 @@ public class AddEditOrDeleteApplication implements Serializable
 	{
 		tableActiveTabManager.setActiveTab(TableActiveTabManager.APPLICATIONS_TAB);
 		
-		
 		SessionFactory sessionFactory = GetSessionFactory.getInstance();
 		Session session = sessionFactory.getCurrentSession();//openSession();
 
 		try
 		{
-			//com.entities.User userEntity = HibernateCommonMethods.getUserbyUsername(userName, session);// (com.entities.User)
 			session.beginTransaction();	
 			
-			application.getComputers().clear();
+			newApplication.getComputers().clear();
 			
 			// get all computers, to link them with the application
 			for (int i = 0; i < applicationsData.getComputersInstalledOn().size(); i++)
@@ -108,7 +111,8 @@ public class AddEditOrDeleteApplication implements Serializable
 				
 				if(c.size()==1)
 				{
-					application.getComputers().add(c.get(0));// add computer to the application
+					newApplication.getComputers().add(c.get(0));// add computer to the application
+					//newApplication.getComputers().clear();
 				}
 				else if(c.size()>1)
 				{
@@ -118,7 +122,7 @@ public class AddEditOrDeleteApplication implements Serializable
 			
 			
 			//session.beginTransaction();
-			session.save(application);//OrUpdate(u);
+			session.save(newApplication);//application);//OrUpdate(u);
 			
 			//if (!session.getTransaction().wasCommitted())
 					session.getTransaction().commit();
@@ -139,25 +143,17 @@ public class AddEditOrDeleteApplication implements Serializable
 			
 			//System.out.println(applicationsData.getComputersInstalledOn());
 			
-			return "registered";
+			return "application_registered";
 		}
 		catch(Exception ex)
 		{
-			// check if the user exyst - duplicated enrty is for the column username
-			if(ex.getCause()!=null)
-			if(ex.getCause().toString().contains("Duplicate entry"))
-				return "user_exist";
-					
-			
-			System.out.println(ex.getCause()+"==================");
-			ex.printStackTrace();
 			
 			if(session.isOpen())
 				session.close();
 			
 		}
 		
-		return "error";
+		return "application_registered_error";
 	}
 
 	
@@ -179,7 +175,7 @@ public class AddEditOrDeleteApplication implements Serializable
 			Application a = (Application) session.load(Application.class, applicationsData.getSelectedApplicationId());
 			
 			if(a==null)
-				return "user_notselected";
+				return "application_notselected";
 			
 			if(a.getComputers()!=null)
 				Hibernate.initialize(a.getComputers());
@@ -219,8 +215,8 @@ public class AddEditOrDeleteApplication implements Serializable
 				}
 				
 				// name can not be changed, add other data
-				a.setLicenseRequired(application.getLicenseRequired());
-				a.setVendorName(application.getVendorName());	// vendor name
+				a.setLicenseRequired(applicationsData.getSelectedApplication().getLicenseRequired());//application.getLicenseRequired());
+				a.setVendorName(applicationsData.getSelectedApplication().getVendorName());//.getVendorName());	// vendor name
 				
 				
 				
@@ -241,7 +237,7 @@ public class AddEditOrDeleteApplication implements Serializable
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 			tableActiveTabManager.setActiveTab(TableActiveTabManager.APPLICATIONS_TAB);
 			
-			return null;//"user_updated";
+			return "application_updated";
 		}
 		catch(Exception ex)
 		{
@@ -251,12 +247,13 @@ public class AddEditOrDeleteApplication implements Serializable
 				session.close();
 		}
 		
-		return "user_updated_error";
+		return "application_updated_error";
 	}
 	
 	
 	 public String deleteSelectedAppliction()
 	 {
+		 
 		// System.out.println(selectedApplicationId);
 		 for (int i = 0; i < applicationsData.getApplications().size(); i++)
 		 { 
@@ -282,11 +279,14 @@ public class AddEditOrDeleteApplication implements Serializable
 							session.close();
 				
 					 
+					 FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+					 
+					 
 					 // user deleted from the database
 					 // Update the table
 					 applicationsData.loadApplicationsFromDatabase();
 					 
-					 return null;
+					 return "deleted";
 					 
 					 
 				}

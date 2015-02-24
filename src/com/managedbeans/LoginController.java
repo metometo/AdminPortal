@@ -2,6 +2,7 @@ package com.managedbeans;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -14,10 +15,13 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.web.WebAttributes;
+
+import com.common_classes.FormMethods;
 import com.entities.helpers.GetSessionFactory;
 import com.entities.helpers.HibernateCommonMethods;
 import com.entities.helpers.RoleType;
@@ -40,20 +44,23 @@ public class LoginController implements PhaseListener
 	 * @throws IOException
 	 */
 	public String doLogin() throws ServletException, IOException
-	{				
+	{	
 		ExternalContext context = FacesContext.getCurrentInstance()
 				.getExternalContext();
 
 		RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
 				.getRequestDispatcher("/j_spring_security_check");
 
-		dispatcher.forward((ServletRequest) context.getRequest(),
-				(ServletResponse) context.getResponse());
-
+		
+			dispatcher.forward((ServletRequest) context.getRequest(),
+					(ServletResponse) context.getResponse());
+		
+		
 		FacesContext.getCurrentInstance().responseComplete();
 
 		getRolesFromDatabase(user);
-		
+			
+			
 		return null;
 	}
 
